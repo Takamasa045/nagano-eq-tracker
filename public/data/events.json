@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-04-18T09:10:45+0000",
+  "fetched_at": "2026-04-18T09:37:10+0000",
   "source": "P2P地震情報 API v2 (https://www.p2pquake.net/)",
   "filter": {
     "name": "長野県北部",
@@ -14,7 +14,7 @@
     "since": "20250417",
     "until": "20260419"
   },
-  "count": 57,
+  "count": 58,
   "events": [
     {
       "time": "2025/04/18 18:26:00",
@@ -585,6 +585,16 @@
       "maxScale": 30,
       "type": "DetailScale",
       "id": "69e345fa64680b00075cb2a3"
+    },
+    {
+      "time": "2026/04/18 18:13:00",
+      "magnitude": 2.1,
+      "depth": 0,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "69e34bf764680b00075cb2b4"
     }
   ]
 }
