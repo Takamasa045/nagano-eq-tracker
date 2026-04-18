@@ -1,0 +1,560 @@
+{
+  "fetched_at": "2026-04-18T16:19:05+0900",
+  "source": "P2P地震情報 API v2 (https://www.p2pquake.net/)",
+  "filter": {
+    "name": "長野県北部",
+    "bbox": {
+      "latMin": 36.4,
+      "latMax": 36.7,
+      "lonMin": 137.7,
+      "lonMax": 138.1
+    },
+    "depth_max_km": 30,
+    "min_magnitude": 2.0,
+    "since": "20250417",
+    "until": "20260419"
+  },
+  "count": 54,
+  "events": [
+    {
+      "time": "2025/04/18 18:26:00",
+      "magnitude": 2.9,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "68021b9564680b0007d9ad66"
+    },
+    {
+      "time": "2025/04/18 18:49:00",
+      "magnitude": 2.2,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "680220fc64680b0007d9ad76"
+    },
+    {
+      "time": "2025/04/18 20:19:00",
+      "magnitude": 5,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 45,
+      "type": "DetailScale",
+      "id": "6802362d64680b0007d9aebf"
+    },
+    {
+      "time": "2025/04/18 20:22:00",
+      "magnitude": 2.8,
+      "depth": 0,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "680236c364680b0007d9aede"
+    },
+    {
+      "time": "2025/04/18 20:40:00",
+      "magnitude": 2.3,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "68023acf64680b0007d9af1d"
+    },
+    {
+      "time": "2025/04/18 20:42:00",
+      "magnitude": 3.2,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "68023b5864680b0007d9af32"
+    },
+    {
+      "time": "2025/04/18 20:54:00",
+      "magnitude": 2.7,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "68023e3164680b0007d9af48"
+    },
+    {
+      "time": "2025/04/18 21:07:00",
+      "magnitude": 2.4,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6802413d64680b0007d9af53"
+    },
+    {
+      "time": "2025/04/18 21:09:00",
+      "magnitude": 2.6,
+      "depth": 0,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "680241c064680b0007d9af5c"
+    },
+    {
+      "time": "2025/04/18 21:17:00",
+      "magnitude": 2.3,
+      "depth": 0,
+      "lat": 36.4,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "680243ec64680b0007d9af65"
+    },
+    {
+      "time": "2025/04/18 21:41:00",
+      "magnitude": 2.7,
+      "depth": 10,
+      "lat": 36.4,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6802495064680b0007d9af72"
+    },
+    {
+      "time": "2025/04/18 22:19:00",
+      "magnitude": 2.5,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6802523b64680b0007d9af98"
+    },
+    {
+      "time": "2025/04/18 22:29:00",
+      "magnitude": 2.8,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6802546464680b0007d9afa6"
+    },
+    {
+      "time": "2025/04/18 23:21:00",
+      "magnitude": 2.1,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "680260ad64680b0007d9afc0"
+    },
+    {
+      "time": "2025/04/18 23:23:00",
+      "magnitude": 2,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6802611a64680b0007d9afc5"
+    },
+    {
+      "time": "2025/04/18 23:29:00",
+      "magnitude": 2.5,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "680262a364680b0007d9afca"
+    },
+    {
+      "time": "2025/04/18 23:39:00",
+      "magnitude": 4.4,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 40,
+      "type": "DetailScale",
+      "id": "6802650364680b0007d9b044"
+    },
+    {
+      "time": "2025/04/18 23:43:00",
+      "magnitude": 2.1,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "680265f364680b0007d9b052"
+    },
+    {
+      "time": "2025/04/19 00:08:00",
+      "magnitude": 3.4,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 30,
+      "type": "DetailScale",
+      "id": "68026bb164680b0007d9b073"
+    },
+    {
+      "time": "2025/04/19 00:12:00",
+      "magnitude": 2.2,
+      "depth": 10,
+      "lat": 36.4,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "68026cfe64680b0007d9b076"
+    },
+    {
+      "time": "2025/04/19 00:13:00",
+      "magnitude": 2.2,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "68026cfe64680b0007d9b079"
+    },
+    {
+      "time": "2025/04/19 01:02:00",
+      "magnitude": 4.1,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 40,
+      "type": "DetailScale",
+      "id": "6802787764680b0007d9b0bd"
+    },
+    {
+      "time": "2025/04/19 01:07:00",
+      "magnitude": 3,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "6802795c64680b0007d9b0c3"
+    },
+    {
+      "time": "2025/04/19 01:18:00",
+      "magnitude": 2.1,
+      "depth": 0,
+      "lat": 36.5,
+      "lon": 138,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "68027c1764680b0007d9b0cd"
+    },
+    {
+      "time": "2025/04/19 01:30:00",
+      "magnitude": 2.8,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "68027f0064680b0007d9b0d6"
+    },
+    {
+      "time": "2025/04/19 01:50:00",
+      "magnitude": 2.7,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "680283aa64680b0007d9b0e3"
+    },
+    {
+      "time": "2025/04/19 01:52:00",
+      "magnitude": 2.4,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6802840464680b0007d9b0f3"
+    },
+    {
+      "time": "2025/04/19 01:53:00",
+      "magnitude": 3.7,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 30,
+      "type": "DetailScale",
+      "id": "680284ce64680b0007d9b0fa"
+    },
+    {
+      "time": "2025/04/19 01:56:00",
+      "magnitude": 2.2,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6802851a64680b0007d9b0ff"
+    },
+    {
+      "time": "2025/04/19 02:21:00",
+      "magnitude": 3.3,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "68028af964680b0007d9b10b"
+    },
+    {
+      "time": "2025/04/19 02:24:00",
+      "magnitude": 2.8,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "68028bb064680b0007d9b10e"
+    },
+    {
+      "time": "2025/04/19 02:27:00",
+      "magnitude": 2.9,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "68028c3b64680b0007d9b114"
+    },
+    {
+      "time": "2025/04/19 02:30:00",
+      "magnitude": 2.2,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "68028ce464680b0007d9b117"
+    },
+    {
+      "time": "2025/04/19 02:37:00",
+      "magnitude": 2.1,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "68028e9364680b0007d9b11d"
+    },
+    {
+      "time": "2025/04/19 02:41:00",
+      "magnitude": 3.1,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 30,
+      "type": "DetailScale",
+      "id": "68028fa464680b0007d9b128"
+    },
+    {
+      "time": "2025/04/19 04:41:00",
+      "magnitude": 2.4,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6802abf564680b0007d9b158"
+    },
+    {
+      "time": "2025/04/19 06:19:00",
+      "magnitude": 2.4,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6802c28664680b0007d9b194"
+    },
+    {
+      "time": "2025/04/19 06:47:00",
+      "magnitude": 2.4,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6802c92964680b0007d9b1a4"
+    },
+    {
+      "time": "2025/04/19 09:37:00",
+      "magnitude": 2.2,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6802f10264680b0007d9b1ed"
+    },
+    {
+      "time": "2025/04/19 12:24:00",
+      "magnitude": 2.9,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "6803181964680b0007d9b236"
+    },
+    {
+      "time": "2025/04/19 13:04:00",
+      "magnitude": 2.3,
+      "depth": 0,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "680321a264680b0007d9b253"
+    },
+    {
+      "time": "2025/04/19 20:12:00",
+      "magnitude": 2.3,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "680385f864680b0007d9b305"
+    },
+    {
+      "time": "2025/04/20 13:39:00",
+      "magnitude": 2.8,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "68047b5764680b0007d9b492"
+    },
+    {
+      "time": "2025/04/20 14:50:00",
+      "magnitude": 2.6,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "68048bf464680b0007d9b4b3"
+    },
+    {
+      "time": "2025/04/20 17:42:00",
+      "magnitude": 2,
+      "depth": 0,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6804b44a64680b0007d9b648"
+    },
+    {
+      "time": "2025/04/20 18:57:00",
+      "magnitude": 2.5,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6804c5ab64680b0007d9b66d"
+    },
+    {
+      "time": "2025/04/21 22:41:00",
+      "magnitude": 2.5,
+      "depth": 10,
+      "lat": 36.4,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "68064bd664680b0007d9ba36"
+    },
+    {
+      "time": "2025/04/24 23:03:00",
+      "magnitude": 2,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "680a456b64680b0007d9c131"
+    },
+    {
+      "time": "2025/04/27 08:03:00",
+      "magnitude": 2.5,
+      "depth": 0,
+      "lat": 36.4,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "680d670564680b0007d9c72e"
+    },
+    {
+      "time": "2025/05/02 16:17:00",
+      "magnitude": 2.1,
+      "depth": 0,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6814727b64680b00073b066a"
+    },
+    {
+      "time": "2025/09/16 09:32:00",
+      "magnitude": 2,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "68c8b0e864680b00075aa6ee"
+    },
+    {
+      "time": "2026/04/18 13:20:00",
+      "magnitude": 5,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 50,
+      "type": "DetailScale",
+      "id": "69e307a964680b00075cb0e4"
+    },
+    {
+      "time": "2026/04/18 14:54:00",
+      "magnitude": 5.1,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 45,
+      "type": "DetailScale",
+      "id": "69e31df064680b00075cb1f9"
+    },
+    {
+      "time": "2026/04/18 15:33:00",
+      "magnitude": 3.2,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 30,
+      "type": "DetailScale",
+      "id": "69e326c564680b00075cb228"
+    }
+  ]
+}
