@@ -41,7 +41,7 @@ export function CumulativeChart({ series, horizonHours }: Props) {
           stroke="#3a342c"
           label={{ value: "本震からの経過時間", position: "insideBottom", offset: -2, fill: "#bbb" }}
         />
-        <YAxis stroke="#3a342c" label={{ value: "累積件数", angle: -90, position: "insideLeft", fill: "#bbb" }} />
+        <YAxis stroke="#3a342c" label={{ value: "地震の合計回数", angle: -90, position: "insideLeft", fill: "#bbb" }} />
         <Tooltip
           contentStyle={{ background: "#fffaf0", border: "1px solid rgba(26,22,18,0.2)", color: "#1a1612", borderRadius: 6, fontSize: 12 }}
           labelFormatter={(v) => {

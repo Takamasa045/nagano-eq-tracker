@@ -59,9 +59,9 @@ function buildStyle(tileKey: TileKey): maplibregl.StyleSpecification {
         source: "istl",
         paint: {
           "line-color": "#3b6a8a",
-          "line-width": 8,
-          "line-opacity": 0.18,
-          "line-blur": 4,
+          "line-width": 14,
+          "line-opacity": 0.22,
+          "line-blur": 6,
         },
       },
       {
@@ -70,9 +70,9 @@ function buildStyle(tileKey: TileKey): maplibregl.StyleSpecification {
         source: "istl",
         paint: {
           "line-color": "#3b6a8a",
-          "line-width": 2.4,
+          "line-width": 3.2,
           "line-dasharray": [3, 2],
-          "line-opacity": 0.9,
+          "line-opacity": 1,
         },
       },
     ],
@@ -83,7 +83,7 @@ export function MapView({ series, pulseKey }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const markersRef = useRef<maplibregl.Marker[]>([]);
-  const [tileKey, setTileKey] = useState<TileKey>("topo");
+  const [tileKey, setTileKey] = useState<TileKey>("std");
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
