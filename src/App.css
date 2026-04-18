@@ -240,6 +240,122 @@ a:hover { background: rgba(200, 65, 44, 0.08); }
   margin-top: 2px;
 }
 
+/* ─── ISTL callout ─── */
+.istl-callout {
+  margin: 18px 0 4px;
+  padding: 16px 20px 14px;
+  background: rgba(247, 244, 236, 0.7);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--so);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.istl-callout__head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.istl-callout__tag {
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  color: var(--so);
+  border: 1px solid var(--so);
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.istl-callout__head h2 {
+  margin: 0;
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-size: 1.05rem;
+  color: var(--sumi);
+  letter-spacing: 0.02em;
+}
+
+.istl-callout__rows {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.istl-callout__rows li {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.2fr) minmax(140px, 1fr) 1.4fr;
+  gap: 10px;
+  align-items: baseline;
+  padding: 6px 0;
+  border-top: 1px dashed var(--line);
+  font-size: 0.84rem;
+}
+
+.istl-callout__rows li:first-child { border-top: none; }
+
+.istl-callout__label {
+  color: var(--sumi-soft);
+  font-weight: 500;
+}
+
+.istl-callout__val {
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-weight: 700;
+  color: var(--sumi);
+  font-feature-settings: "tnum";
+}
+
+.istl-callout__note {
+  color: var(--sumi-soft);
+  font-size: 0.76rem;
+}
+
+.istl-callout__quote {
+  margin: 8px 0 6px;
+  font-size: 0.82rem;
+  color: var(--sumi-soft);
+  line-height: 1.7;
+}
+
+.istl-callout__link {
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--so);
+  color: var(--so);
+  padding: 0 2px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.istl-callout__link:hover { color: var(--shu); border-color: var(--shu); }
+
+.istl-callout__src {
+  margin: 4px 0 0;
+  font-size: 0.7rem;
+  color: var(--sumi-soft);
+  letter-spacing: 0.02em;
+}
+
+.istl-callout__src a {
+  color: var(--so);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--so);
+}
+
+.istl-callout__src a:hover { color: var(--shu); border-color: var(--shu); }
+
+@media (max-width: 640px) {
+  .istl-callout__rows li {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .istl-callout__note { font-size: 0.72rem; }
+}
+
 /* ─── Period pills ─── */
 .controls {
   display: flex;
@@ -1064,6 +1180,11 @@ a:hover { background: rgba(200, 65, 44, 0.08); }
   background: var(--sumi);
   color: var(--kinari);
   border: none;
+}
+
+.zine__panel--note {
+  background: rgba(247, 244, 236, 0.65);
+  border-left: 3px solid var(--shu);
 }
 
 .zine__panel--dark h2,

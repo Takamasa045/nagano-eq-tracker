@@ -104,6 +104,36 @@ export function Home() {
         })}
       </section>
 
+      <aside className="istl-callout" aria-label="糸魚川-静岡構造線の文脈">
+        <div className="istl-callout__head">
+          <span className="istl-callout__tag">活断層の文脈</span>
+          <h2>糸魚川-静岡構造線（ISTL）長期評価</h2>
+        </div>
+        <ul className="istl-callout__rows">
+          <li>
+            <span className="istl-callout__label">北部区間（小谷–明科）</span>
+            <span className="istl-callout__val">30年以内 ほぼ0〜1%</span>
+            <span className="istl-callout__note">2014年神城断層地震で一部解放</span>
+          </li>
+          <li>
+            <span className="istl-callout__label">中北部区間（明科–諏訪湖北）</span>
+            <span className="istl-callout__val">30年以内 13〜30%</span>
+            <span className="istl-callout__note">国内最高水準（地震本部評価）</span>
+          </li>
+        </ul>
+        <p className="istl-callout__quote">
+          気象庁は2025年4月18日の地震について、より大きな本震の前兆と判断する根拠は得られていないとの見解を示しています。
+          ISTL の地質的背景や4区間の特性は<button className="istl-callout__link" onClick={() => navigate("istl")}>解説ページ</button>へ。
+        </p>
+        <p className="istl-callout__src">
+          出典:&nbsp;
+          <a href="https://www.jishin.go.jp/regional_seismicity/rs_katsudanso/f041_042_044_itoshizu/" target="_blank" rel="noreferrer">地震調査研究推進本部 ISTL評価</a>
+          &nbsp;／&nbsp;
+          <a href="https://www.jishin.go.jp/main/chousa/katsudansou_pdf/41_42_44_itoigawa-shizuoka_2.pdf" target="_blank" rel="noreferrer">長期評価第二版PDF</a>
+          ／ 最終更新: 2026年4月
+        </p>
+      </aside>
+
       <section className="controls">
         <span className="label">表示期間</span>
         {HORIZON_PRESETS.map((p, i) => (

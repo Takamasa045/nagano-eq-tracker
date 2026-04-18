@@ -64,7 +64,11 @@ export function Istl() {
             ))}
           </div>
           <p className="muted">
-            出典：地震調査研究推進本部「糸魚川-静岡構造線断層帯の長期評価」。確率は基準日により変動します。
+            出典：
+            <a href="https://www.jishin.go.jp/regional_seismicity/rs_katsudanso/f041_042_044_itoshizu/" target="_blank" rel="noreferrer">地震調査研究推進本部「糸魚川-静岡構造線断層帯」評価ページ</a>
+            ／
+            <a href="https://www.jishin.go.jp/main/chousa/katsudansou_pdf/41_42_44_itoigawa-shizuoka_2.pdf" target="_blank" rel="noreferrer">長期評価第二版PDF</a>
+            。確率は基準日により変動します。
           </p>
         </article>
 
@@ -92,6 +96,21 @@ export function Istl() {
             ))}
           </ol>
         </article>
+
+        <article className="zine__panel zine__panel--note">
+          <span className="zine__num">五</span>
+          <h2>気象庁の見解について</h2>
+          <p>
+            気象庁は2025年4月18日の長野県北部の地震について、
+            より大きな本震の前兆と判断する根拠は得られていないとの見解を示しています。
+            ただし活断層帯の周辺では今後も同程度の地震が起きうるため、
+            地震本部が示す長期評価とあわせ、平常時からの備えが推奨されています。
+          </p>
+          <p className="muted">
+            参考：気象庁「令和7年4月18日 長野県北部の地震に関する報道発表資料」。
+            本サイトは活断層帯の地質的背景の解説を目的としており、地震予知を行うものではありません。
+          </p>
+        </article>
       </section>
 
       <nav className="pager">
@@ -104,7 +123,14 @@ export function Istl() {
       </nav>
 
       <footer className="footer">
-        <p className="credit">出典: 地震本部・気象庁・『日本被害地震総覧』。地形の概略経路は装飾用です。</p>
+        <p>
+          一次出典:&nbsp;
+          <a href="https://www.jishin.go.jp/regional_seismicity/rs_katsudanso/f041_042_044_itoshizu/" target="_blank" rel="noreferrer">地震調査研究推進本部 ISTL評価</a>
+          ／
+          <a href="https://www.jishin.go.jp/main/chousa/katsudansou_pdf/41_42_44_itoigawa-shizuoka_2.pdf" target="_blank" rel="noreferrer">長期評価第二版PDF</a>
+          ／ 気象庁 報道発表資料 ／『日本被害地震総覧』
+        </p>
+        <p className="credit">最終更新: 2026年4月18日 ／ 地形の概略経路は装飾用です。</p>
       </footer>
     </>
   );
