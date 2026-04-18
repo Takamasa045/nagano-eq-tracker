@@ -44,8 +44,8 @@ jobs:
 
       - name: Deploy to Cloudflare Pages
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE }}
+          CLOUDFLARE_ACCOUNT_ID: a697a3a284fa5543c640bc7d37f2c517
         run: |
           npx --yes wrangler@latest pages deploy dist \
             --project-name=nagano-eq-tracker \
