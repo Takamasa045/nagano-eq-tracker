@@ -205,6 +205,15 @@ export function Home() {
       </section>
 
       <footer className="footer">
+        <p className="disclaimer">
+          <strong>本サイトは個人が趣味で制作したものです。</strong>
+          気象庁・地震調査研究推進本部・その他公的機関とは一切関係ありません。
+          防災・避難の判断は、必ず公式発表（
+          <a href="https://www.data.jma.go.jp/nagano/shosai/jishinkaisetsu/jishinportal260418.html" target="_blank" rel="noreferrer">
+            気象庁「令和８年４月18日 長野県北部の地震 ポータルサイト」
+          </a>
+          など）をご確認ください。
+        </p>
         <p>
           データ出典: <a href="https://www.p2pquake.net/" target="_blank" rel="noreferrer">P2P地震情報 API v2</a>。
           地形タイル: <a href="https://opentopomap.org/" target="_blank" rel="noreferrer">OpenTopoMap</a> (CC-BY-SA)。

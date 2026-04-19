@@ -750,6 +750,19 @@ a:hover { background: rgba(200, 65, 44, 0.08); }
   font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
 }
 
+.footer .disclaimer {
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  border-left: 3px solid var(--shu);
+  background: rgba(200, 65, 44, 0.04);
+  color: var(--sumi);
+  font-size: 0.8rem;
+}
+
+.footer .disclaimer strong {
+  color: var(--shu);
+}
+
 .error {
   color: var(--shu);
   font-weight: 600;
