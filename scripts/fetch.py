@@ -63,6 +63,15 @@ def main():
         # 同一timeで複数報があれば DetailScale > Destination の優先
         t = eq.get("time")
         key = t
+        # 観測点は長野県内のみに絞って容量を抑える
+        points_nagano = [
+            {"addr": p.get("addr"), "scale": p.get("scale")}
+            for p in r.get("points", []) or []
+            if p.get("pref") == "長野県" and p.get("scale") is not None
+        ]
+        # 震度の高い順にソート
+        points_nagano.sort(key=lambda p: p["scale"], reverse=True)
+        free_comment = (r.get("comments") or {}).get("freeFormComment") or ""
         rec = {
             "time": t,
             "magnitude": mag,
@@ -72,7 +81,11 @@ def main():
             "maxScale": eq.get("maxScale"),
             "type": r.get("issue", {}).get("type"),
             "id": r.get("id"),
+            "domesticTsunami": eq.get("domesticTsunami"),
+            "points": points_nagano,
         }
+        if free_comment.strip():
+            rec["freeFormComment"] = free_comment
         if key not in by_id or rec["type"] == "DetailScale":
             by_id[key] = rec
 

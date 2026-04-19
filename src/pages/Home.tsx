@@ -7,6 +7,8 @@ import { MTChart } from "../components/MTChart";
 import { RateChart } from "../components/RateChart";
 import { DepthChart } from "../components/DepthChart";
 import { MountainSilhouette } from "../components/MountainSilhouette";
+import { MainShockObsPoints } from "../components/MainShockObsPoints";
+import { IntensityHistogram } from "../components/IntensityHistogram";
 import { navigate } from "../router";
 
 const HORIZON_PRESETS = [
@@ -104,6 +106,8 @@ export function Home() {
         })}
       </section>
 
+      <MainShockObsPoints series={series} />
+
       <aside className="istl-callout" aria-label="糸魚川-静岡構造線の文脈">
         <div className="istl-callout__head">
           <span className="istl-callout__tag">活断層の文脈</span>
@@ -174,6 +178,13 @@ export function Home() {
         <div className="panel">
           <h2>1時間あたりの地震回数 <small>参考：大森-宇津則のフィット曲線つき</small></h2>
           <RateChart series={series} horizonHours={preset.hours} binHours={preset.bin} />
+        </div>
+        <div className="panel wide">
+          <h2>震度別の回数 <small>A系列 vs B系列 ── 各震度で何回観測されたか</small></h2>
+          <IntensityHistogram series={series} />
+          <p className="muted">
+            震度1〜5強の本震・余震を階級ごとに比較。B系列（今年）は本震が震度5強で、A系列より一段上に触れています。
+          </p>
         </div>
       </section>
 

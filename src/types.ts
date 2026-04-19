@@ -1,3 +1,8 @@
+export type ObsPoint = {
+  addr: string;
+  scale: number;
+};
+
 export type RawEvent = {
   time: string;
   magnitude: number;
@@ -7,6 +12,9 @@ export type RawEvent = {
   maxScale: number | null;
   type: string;
   id: string;
+  domesticTsunami?: string;
+  freeFormComment?: string;
+  points?: ObsPoint[];
 };
 
 export type Dataset = {

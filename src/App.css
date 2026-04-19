@@ -763,6 +763,149 @@ a:hover { background: rgba(200, 65, 44, 0.08); }
   color: var(--shu);
 }
 
+/* Mainshock observation points */
+.obs-section {
+  margin: 36px 0 28px;
+}
+
+.obs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 18px;
+  margin-top: 14px;
+}
+
+.obs-card {
+  border: 1px solid var(--sumi);
+  border-left-width: 3px;
+  border-radius: 2px;
+  padding: 16px 18px 14px;
+  background: rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+
+.obs-card[data-key="A"] { border-left-color: var(--kin, #a98a52); }
+.obs-card[data-key="B"] { border-left-color: var(--shu, #c8412c); }
+
+.obs-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+
+.obs-card__label {
+  font-weight: 600;
+  color: var(--sumi);
+  font-size: 0.9rem;
+}
+
+.obs-card__time {
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-size: 0.8rem;
+  color: var(--sumi-soft);
+}
+
+.obs-card__total {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--sumi-soft);
+}
+
+.obs-dist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--sumi);
+  border: 1px solid transparent;
+}
+
+.chip em {
+  font-style: normal;
+  font-weight: 700;
+}
+
+.chip--s10 { background: #eef2f5; }
+.chip--s20 { background: #dce6ed; }
+.chip--s30 { background: #f4e2c1; color: #6b4a10; }
+.chip--s40 { background: #e9b97c; color: #4a2a06; }
+.chip--s45 { background: #e07a4c; color: #fff; }
+.chip--s50 { background: #c8412c; color: #fff; }
+.chip--s55 { background: #8a1a12; color: #fff; }
+.chip--s60 { background: #5a0a06; color: #fff; }
+.chip--s70 { background: #2a0000; color: #fff; }
+
+.obs-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.obs-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 3px 0;
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.08);
+  font-size: 0.82rem;
+}
+
+.obs-badge {
+  min-width: 34px;
+  text-align: center;
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+}
+
+.obs-badge--s30 { background: #f4e2c1; color: #6b4a10; }
+.obs-badge--s40 { background: #e9b97c; color: #4a2a06; }
+.obs-badge--s45 { background: #e07a4c; color: #fff; }
+.obs-badge--s50 { background: #c8412c; color: #fff; }
+.obs-badge--s55 { background: #8a1a12; color: #fff; }
+.obs-badge--s60 { background: #5a0a06; color: #fff; }
+.obs-badge--s70 { background: #2a0000; color: #fff; }
+
+.obs-addr {
+  color: var(--sumi);
+}
+
+.obs-foot {
+  margin-top: 10px;
+  font-size: 0.76rem;
+  color: var(--sumi-soft);
+}
+
+.obs-foot strong {
+  color: var(--sumi);
+}
+
+/* Intensity histogram */
+.hist-svg {
+  width: 100%;
+  height: auto;
+  max-height: 260px;
+}
+
 .error {
   color: var(--shu);
   font-weight: 600;
