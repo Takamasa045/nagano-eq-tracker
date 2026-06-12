@@ -3,11 +3,24 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { Series } from "../types";
 import { magToRadius } from "../utils";
-import { ISTL_TRACE } from "../geo";
+import { ISTL_TRACE, PEAKS } from "../geo";
 
 type Props = { series: Series[]; pulseKey?: "A" | "B" };
 
+const ISTL_COLOR = "#6366f1";
+
 const TILE_PRESETS = {
+  base: {
+    label: "ライト",
+    tiles: [
+      "https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+      "https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+      "https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+      "https://d.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+    ],
+    attribution:
+      '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+  },
   topo: {
     label: "地形",
     tiles: [
@@ -17,12 +30,6 @@ const TILE_PRESETS = {
     ],
     attribution:
       'タイル: © <a href="https://opentopomap.org/">OpenTopoMap</a> (CC-BY-SA) / © OSM',
-  },
-  std: {
-    label: "標準",
-    tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
-    attribution:
-      '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 } as const;
 
@@ -78,9 +85,9 @@ function buildStyle(tileKey: TileKey, faultOverlay: boolean): maplibregl.StyleSp
       type: "line",
       source: "istl",
       paint: {
-        "line-color": "#3b6a8a",
+        "line-color": ISTL_COLOR,
         "line-width": 14,
-        "line-opacity": 0.22,
+        "line-opacity": 0.18,
         "line-blur": 6,
       },
     },
@@ -89,32 +96,43 @@ function buildStyle(tileKey: TileKey, faultOverlay: boolean): maplibregl.StyleSp
       type: "line",
       source: "istl",
       paint: {
-        "line-color": "#3b6a8a",
-        "line-width": 3.2,
+        "line-color": ISTL_COLOR,
+        "line-width": 2.4,
         "line-dasharray": [3, 2],
-        "line-opacity": 1,
+        "line-opacity": 0.9,
       },
     },
   );
   return { version: 8, sources, layers };
 }
 
+/** デスクトップではヒーロー（左）とレール（右）を避けて震源域を中央に置く */
+function cameraPadding(): maplibregl.PaddingOptions {
+  const desktop = window.matchMedia("(min-width: 1080px)").matches;
+  if (!desktop) return { top: 40, bottom: 40, left: 20, right: 20 };
+  return { top: 90, bottom: 60, left: 410, right: 480 };
+}
+
 export function MapView({ series, pulseKey }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const markersRef = useRef<maplibregl.Marker[]>([]);
-  const [tileKey, setTileKey] = useState<TileKey>("std");
+  const [tileKey, setTileKey] = useState<TileKey>("base");
   const [faultOverlay, setFaultOverlay] = useState<boolean>(false);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
+    const desktop = window.matchMedia("(min-width: 1080px)").matches;
     const map = new maplibregl.Map({
       container: containerRef.current,
       style: buildStyle(tileKey, faultOverlay),
       center: [137.9, 36.55],
-      zoom: 9,
+      zoom: desktop ? 9.6 : 8.8,
+      cooperativeGestures: !desktop,
     });
-    map.addControl(new maplibregl.NavigationControl({}), "top-right");
+    map.addControl(new maplibregl.NavigationControl({}), "bottom-right");
+    map.addControl(new maplibregl.ScaleControl({}), "bottom-left");
+    map.jumpTo({ center: [137.9, 36.55], padding: cameraPadding() });
     mapRef.current = map;
     return () => {
       map.remove();
@@ -135,6 +153,18 @@ export function MapView({ series, pulseKey }: Props) {
     const render = () => {
       markersRef.current.forEach((m) => m.remove());
       markersRef.current = [];
+      for (const p of PEAKS) {
+        const el = document.createElement("div");
+        el.className = "peak-marker";
+        el.innerHTML =
+          `<span class="tri">▲</span>` +
+          `<span class="nm">${p.name}</span>` +
+          `<span class="el">${p.elev.toLocaleString()}m</span>`;
+        const m = new maplibregl.Marker({ element: el })
+          .setLngLat([p.lng, p.lat])
+          .addTo(map);
+        markersRef.current.push(m);
+      }
       for (const s of series) {
         for (const e of s.events) {
           const r = magToRadius(e.magnitude);
@@ -144,8 +174,8 @@ export function MapView({ series, pulseKey }: Props) {
           el.style.width = `${r * 2}px`;
           el.style.height = `${r * 2}px`;
           el.style.borderRadius = "50%";
-          el.style.background = `${s.color}55`;
-          el.style.border = `2px solid ${s.color}`;
+          el.style.background = `${s.color}40`;
+          el.style.border = `1.5px solid ${s.color}`;
           el.style.boxSizing = "border-box";
           el.title = `${s.label}\n${e.time}\nM${e.magnitude} 震度${e.intensity} 深さ${e.depth}km`;
           const m = new maplibregl.Marker({ element: el })
@@ -165,6 +195,7 @@ export function MapView({ series, pulseKey }: Props) {
 
   return (
     <div className="map-wrap">
+      <div ref={containerRef} className="map-view" />
       <div className="map-controls">
         {(Object.keys(TILE_PRESETS) as TileKey[]).map((k) => (
           <button
@@ -183,10 +214,11 @@ export function MapView({ series, pulseKey }: Props) {
           活断層図 {faultOverlay ? "ON" : "OFF"}
         </button>
         <span className="legend">
-          <span className="legend-line" /> 糸魚川-静岡構造線（概略位置）
+          <span className="legend-dot" style={{ background: series[0]?.color }} /> 2025
+          <span className="legend-dot" style={{ background: series[1]?.color }} /> 2026
+          <span className="legend-line" /> ISTL
         </span>
       </div>
-      <div ref={containerRef} className="map-view" />
       {faultOverlay && (
         <p className="map-note">
           活断層図はズーム12以上で表示されます（市街地周辺）。出典: 国土地理院 都市圏活断層図。

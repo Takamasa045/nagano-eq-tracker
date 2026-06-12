@@ -12,6 +12,7 @@ import {
 import type { Series } from "../types";
 import { rateBins } from "../utils";
 import { fitOmori } from "../omori";
+import { CHART } from "../chartTheme";
 
 type Props = { series: Series[]; horizonHours: number; binHours: number };
 
@@ -40,24 +41,23 @@ export function RateChart({ series, horizonHours, binHours }: Props) {
 
   return (
     <div>
-      <ResponsiveContainer width="100%" height={320}>
-        <ComposedChart data={data} margin={{ top: 8, right: 24, bottom: 8, left: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(26,22,18,0.1)" />
+      <ResponsiveContainer width="100%" height={240}>
+        <ComposedChart data={data} margin={{ top: 8, right: 12, bottom: 8, left: -8 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke={CHART.grid} />
           <XAxis
             dataKey="tHours"
             type="number"
             domain={[0, horizonHours]}
             tickFormatter={(v) => (v >= 24 ? `${(v / 24).toFixed(0)}d` : `${v.toFixed(1)}h`)}
-            stroke="#3a342c"
-            label={{ value: "本震からの経過時間", position: "insideBottom", offset: -2, fill: "#bbb" }}
+            stroke={CHART.axis}
           />
-          <YAxis stroke="#3a342c" label={{ value: "回/時", angle: -90, position: "insideLeft", fill: "#bbb" }} />
-          <Tooltip contentStyle={{ background: "#fffaf0", border: "1px solid rgba(26,22,18,0.2)", color: "#1a1612", borderRadius: 6, fontSize: 12 }} />
-          <Legend wrapperStyle={{ color: "#1a1612", fontSize: 12 }} />
+          <YAxis stroke={CHART.axis} />
+          <Tooltip contentStyle={CHART.tooltipStyle} />
+          <Legend wrapperStyle={{ color: CHART.legend, fontSize: 11 }} />
           <Bar dataKey="A" name={series[0].label} fill={series[0].color} fillOpacity={0.55} />
           <Bar dataKey="B" name={series[1].label} fill={series[1].color} fillOpacity={0.85} />
           {fitA && (
-            <Line type="monotone" dataKey="fit" name="大森則 (2025フィット)" stroke="#1a1612" dot={false} strokeWidth={1.5} strokeDasharray="5 3" />
+            <Line type="monotone" dataKey="fit" name="大森則 (2025フィット)" stroke={CHART.fitLine} dot={false} strokeWidth={1.5} strokeDasharray="5 3" />
           )}
         </ComposedChart>
       </ResponsiveContainer>

@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import type { Series } from "../types";
+import { CHART } from "../chartTheme";
 
 type Props = { series: Series[] };
 
@@ -48,16 +49,15 @@ export function DepthChart({ series }: Props) {
   }));
 
   return (
-    <ResponsiveContainer width="100%" height={260}>
-      <ScatterChart margin={{ top: 8, right: 24, bottom: 8, left: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(26,22,18,0.1)" />
+    <ResponsiveContainer width="100%" height={220}>
+      <ScatterChart margin={{ top: 8, right: 12, bottom: 8, left: -8 }}>
+        <CartesianGrid strokeDasharray="3 3" stroke={CHART.grid} />
         <XAxis
           dataKey="lon"
           type="number"
           domain={[137.7, 138.1]}
           tickFormatter={(v) => `${v.toFixed(2)}°E`}
-          stroke="#3a342c"
-          label={{ value: "経度（西 ←→ 東）", position: "insideBottom", offset: -2, fill: "#3a342c" }}
+          stroke={CHART.axis}
         />
         <YAxis
           dataKey="depth"
@@ -65,17 +65,16 @@ export function DepthChart({ series }: Props) {
           domain={[0, 30]}
           reversed
           tickFormatter={(v) => `${v}km`}
-          stroke="#3a342c"
-          label={{ value: "深さ", angle: -90, position: "insideLeft", fill: "#3a342c" }}
+          stroke={CHART.axis}
         />
-        <ZAxis dataKey="m" range={[60, 600]} />
+        <ZAxis dataKey="m" range={[40, 400]} />
         <Tooltip
           cursor={{ strokeDasharray: "3 3" }}
           content={({ active, payload }) => {
             if (!active || !payload?.length) return null;
             const p = payload[0].payload;
             return (
-              <div style={{ background: "#fffaf0", border: "1px solid rgba(26,22,18,0.2)", color: "#1a1612", padding: "6px 10px", fontSize: 12, borderRadius: 6 }}>
+              <div style={{ ...CHART.tooltipStyle, padding: "6px 10px" }}>
                 <div>{p.time}</div>
                 <div>M{p.m} / 震度{p.intensity}</div>
                 <div>深さ {p.depth}km / {p.lon.toFixed(3)}°E</div>
@@ -83,9 +82,9 @@ export function DepthChart({ series }: Props) {
             );
           }}
         />
-        <Legend wrapperStyle={{ color: "#1a1612", fontSize: 12 }} />
+        <Legend wrapperStyle={{ color: CHART.legend, fontSize: 11 }} />
         {/* ISTL推定通過位置（北部で東経137.85°前後） */}
-        <ReferenceLine x={137.85} stroke="#3b6a8a" strokeDasharray="6 3" label={{ value: "ISTL付近", position: "top", fill: "#3b6a8a", fontSize: 11 }} />
+        <ReferenceLine x={137.85} stroke={CHART.refLine} strokeDasharray="6 3" label={{ value: "ISTL付近", position: "top", fill: CHART.refLine, fontSize: 10 }} />
         {data.map((s) => (
           <Scatter key={s.name} name={s.name} data={s.points} fill={s.color} fillOpacity={0.65} />
         ))}

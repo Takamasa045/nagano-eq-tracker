@@ -9,12 +9,7 @@ const HIGH_THRESHOLD = 30;
 
 export function MainShockObsPoints({ series }: MainShockObsPointsProps) {
   return (
-    <section className="obs-section">
-      <h2 className="section-title">
-        <span className="kanji">震</span>
-        本震の震度観測点 <small>長野県内・気象庁発表値</small>
-      </h2>
-      <div className="obs-grid">
+    <div className="obs-grid">
         {series.map((s) => {
           const points = s.mainshock.points ?? [];
           const high = points.filter((p) => p.scale >= HIGH_THRESHOLD);
@@ -55,9 +50,8 @@ export function MainShockObsPoints({ series }: MainShockObsPointsProps) {
                 </p>
               )}
             </article>
-          );
-        })}
-      </div>
-    </section>
+        );
+      })}
+    </div>
   );
 }

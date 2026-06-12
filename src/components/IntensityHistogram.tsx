@@ -41,8 +41,8 @@ export function IntensityHistogram({ series }: IntensityHistogramProps) {
     <svg viewBox={`0 0 ${W} ${H}`} className="hist-svg" role="img" aria-label="震度別の回数">
       {yTicks.map((t) => (
         <g key={t}>
-          <line x1={PAD_L} x2={W - PAD_R} y1={y(t)} y2={y(t)} stroke="var(--sumi-soft)" strokeDasharray="2 4" opacity="0.4" />
-          <text x={PAD_L - 6} y={y(t) + 4} textAnchor="end" fontSize="10" fill="var(--sumi-soft)">{t}</text>
+          <line x1={PAD_L} x2={W - PAD_R} y1={y(t)} y2={y(t)} stroke="var(--ink-faint)" strokeDasharray="2 4" opacity="0.4" />
+          <text x={PAD_L - 6} y={y(t) + 4} textAnchor="end" fontSize="10" fill="var(--ink-faint)">{t}</text>
         </g>
       ))}
 
@@ -72,7 +72,7 @@ export function IntensityHistogram({ series }: IntensityHistogramProps) {
                       y={PAD_T + plotH - bh - 3}
                       textAnchor="middle"
                       fontSize="9"
-                      fill="var(--sumi)"
+                      fill="var(--ink)"
                     >
                       {val}
                     </text>
@@ -85,7 +85,7 @@ export function IntensityHistogram({ series }: IntensityHistogramProps) {
               y={H - PAD_B + 16}
               textAnchor="middle"
               fontSize="11"
-              fill="var(--sumi)"
+              fill="var(--ink)"
             >
               {intensityLabel(scale)}
             </text>
@@ -93,13 +93,13 @@ export function IntensityHistogram({ series }: IntensityHistogramProps) {
         );
       })}
 
-      <text x={PAD_L} y={H - 6} fontSize="10" fill="var(--sumi-soft)">震度</text>
+      <text x={PAD_L} y={H - 6} fontSize="10" fill="var(--ink-soft)">震度</text>
 
       <g transform={`translate(${W - PAD_R - 180}, ${PAD_T})`}>
         {counts.map((c, i) => (
           <g key={c.key} transform={`translate(0, ${i * 14})`}>
             <rect width="10" height="10" fill={c.color} opacity="0.85" />
-            <text x="14" y="9" fontSize="10" fill="var(--sumi)">
+            <text x="14" y="9" fontSize="10" fill="var(--ink)">
               {c.label}
             </text>
           </g>
