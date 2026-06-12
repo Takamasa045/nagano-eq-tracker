@@ -4,10 +4,14 @@ import json
 import time
 import urllib.request
 import urllib.parse
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+JST = timezone(timedelta(hours=9))
+
 SINCE = "20250417"
-UNTIL = "20260419"
+# 実行時点の翌日（JST）まで。固定値だと以降の余震が取得されず系列が途切れる
+UNTIL = (datetime.now(JST) + timedelta(days=1)).strftime("%Y%m%d")
 MIN_MAG = 2.0
 BBOX = (36.4, 36.7, 137.7, 138.1)
 DEPTH_MAX = 30

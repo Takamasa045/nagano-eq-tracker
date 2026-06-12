@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-06-12T10:14:33+0000",
+  "fetched_at": "2026-06-12T19:40:38+0900",
   "source": "P2P地震情報 API v2 (https://www.p2pquake.net/)",
   "filter": {
     "name": "長野県北部",
@@ -12,9 +12,9 @@
     "depth_max_km": 30,
     "min_magnitude": 2.0,
     "since": "20250417",
-    "until": "20260419"
+    "until": "20260613"
   },
-  "count": 64,
+  "count": 86,
   "events": [
     {
       "time": "2025/04/18 18:26:00",
@@ -4540,6 +4540,864 @@
         },
         {
           "addr": "長野市中条",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/04/20 07:41:00",
+      "magnitude": 2.6,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "69e55b2764680b00075cb6a3",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市美麻",
+          "scale": 20
+        },
+        {
+          "addr": "大町市役所",
+          "scale": 10
+        },
+        {
+          "addr": "長野市信州新町新町",
+          "scale": 10
+        },
+        {
+          "addr": "長野市中条",
+          "scale": 10
+        },
+        {
+          "addr": "小川村高府",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/04/20 11:55:00",
+      "magnitude": 2.7,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "69e5967464680b00075cb703",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "長野市中条",
+          "scale": 20
+        },
+        {
+          "addr": "大町市美麻",
+          "scale": 20
+        },
+        {
+          "addr": "小川村高府",
+          "scale": 20
+        },
+        {
+          "addr": "長野市信州新町新町",
+          "scale": 10
+        },
+        {
+          "addr": "大町市役所",
+          "scale": 10
+        },
+        {
+          "addr": "大町市大町図書館",
+          "scale": 10
+        },
+        {
+          "addr": "大町市八坂",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/04/20 15:54:00",
+      "magnitude": 2.3,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "69e5ce7464680b00075cb761",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市役所",
+          "scale": 10
+        },
+        {
+          "addr": "大町市大町図書館",
+          "scale": 10
+        },
+        {
+          "addr": "大町市美麻",
+          "scale": 10
+        },
+        {
+          "addr": "小川村高府",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/04/20 16:10:00",
+      "magnitude": 2.4,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "69e5d21f64680b00075cb76d",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市役所",
+          "scale": 10
+        },
+        {
+          "addr": "大町市美麻",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/04/21 12:54:00",
+      "magnitude": 2.1,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "69e6f5a864680b00075cbcce",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市美麻",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/04/21 22:39:00",
+      "magnitude": 2.1,
+      "depth": 0,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "69e77ee564680b00075cbde3",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市役所",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/04/22 00:29:00",
+      "magnitude": 3.1,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "69e7988264680b00075cbe17",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "長野市中条",
+          "scale": 20
+        },
+        {
+          "addr": "大町市役所",
+          "scale": 20
+        },
+        {
+          "addr": "大町市美麻",
+          "scale": 20
+        },
+        {
+          "addr": "小川村高府",
+          "scale": 20
+        },
+        {
+          "addr": "長野市信州新町新町",
+          "scale": 10
+        },
+        {
+          "addr": "大町市大町図書館",
+          "scale": 10
+        },
+        {
+          "addr": "大町市八坂",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/04/23 02:42:00",
+      "magnitude": 4.1,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 30,
+      "type": "DetailScale",
+      "id": "69e9098c64680b00075cc1a8",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市美麻",
+          "scale": 30
+        },
+        {
+          "addr": "大町市役所",
+          "scale": 20
+        },
+        {
+          "addr": "大町市大町図書館",
+          "scale": 20
+        },
+        {
+          "addr": "大町市八坂",
+          "scale": 20
+        },
+        {
+          "addr": "長野市大岡",
+          "scale": 20
+        },
+        {
+          "addr": "長野市信州新町新町",
+          "scale": 20
+        },
+        {
+          "addr": "長野市中条",
+          "scale": 20
+        },
+        {
+          "addr": "松川村役場",
+          "scale": 20
+        },
+        {
+          "addr": "小川村高府",
+          "scale": 20
+        },
+        {
+          "addr": "生坂村役場",
+          "scale": 20
+        },
+        {
+          "addr": "長野市箱清水",
+          "scale": 10
+        },
+        {
+          "addr": "長野市鶴賀緑町",
+          "scale": 10
+        },
+        {
+          "addr": "長野市戸隠",
+          "scale": 10
+        },
+        {
+          "addr": "長野市鬼無里",
+          "scale": 10
+        },
+        {
+          "addr": "長野市豊野町豊野",
+          "scale": 10
+        },
+        {
+          "addr": "中野市豊津",
+          "scale": 10
+        },
+        {
+          "addr": "千曲市上山田温泉",
+          "scale": 10
+        },
+        {
+          "addr": "長野池田町池田",
+          "scale": 10
+        },
+        {
+          "addr": "白馬村北城",
+          "scale": 10
+        },
+        {
+          "addr": "小谷村中小谷",
+          "scale": 10
+        },
+        {
+          "addr": "信濃町柏原東裏",
+          "scale": 10
+        },
+        {
+          "addr": "飯綱町牟礼",
+          "scale": 10
+        },
+        {
+          "addr": "松本市安曇",
+          "scale": 10
+        },
+        {
+          "addr": "松本市会田",
+          "scale": 10
+        },
+        {
+          "addr": "松本市波田",
+          "scale": 10
+        },
+        {
+          "addr": "松本市寿",
+          "scale": 10
+        },
+        {
+          "addr": "上田市大手",
+          "scale": 10
+        },
+        {
+          "addr": "安曇野市穂高支所",
+          "scale": 10
+        },
+        {
+          "addr": "安曇野市穂高福祉センター",
+          "scale": 10
+        },
+        {
+          "addr": "安曇野市堀金",
+          "scale": 10
+        },
+        {
+          "addr": "青木村田沢青木",
+          "scale": 10
+        },
+        {
+          "addr": "麻績村麻",
+          "scale": 10
+        },
+        {
+          "addr": "筑北村坂井",
+          "scale": 10
+        },
+        {
+          "addr": "筑北村西条",
+          "scale": 10
+        },
+        {
+          "addr": "筑北村坂北",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/04/23 02:43:00",
+      "magnitude": 2.8,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "69e909e364680b00075cc1b3",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市役所",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/04/27 07:45:00",
+      "magnitude": 3.2,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 30,
+      "type": "DetailScale",
+      "id": "69ee965b64680b00075cce0d",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市役所",
+          "scale": 30
+        },
+        {
+          "addr": "大町市美麻",
+          "scale": 30
+        },
+        {
+          "addr": "大町市大町図書館",
+          "scale": 20
+        },
+        {
+          "addr": "大町市八坂",
+          "scale": 20
+        },
+        {
+          "addr": "長野市信州新町新町",
+          "scale": 20
+        },
+        {
+          "addr": "松川村役場",
+          "scale": 20
+        },
+        {
+          "addr": "小川村高府",
+          "scale": 20
+        },
+        {
+          "addr": "長野市大岡",
+          "scale": 10
+        },
+        {
+          "addr": "千曲市上山田温泉",
+          "scale": 10
+        },
+        {
+          "addr": "長野池田町池田",
+          "scale": 10
+        },
+        {
+          "addr": "坂城町坂城",
+          "scale": 10
+        },
+        {
+          "addr": "安曇野市穂高支所",
+          "scale": 10
+        },
+        {
+          "addr": "安曇野市穂高福祉センター",
+          "scale": 10
+        },
+        {
+          "addr": "安曇野市堀金",
+          "scale": 10
+        },
+        {
+          "addr": "生坂村役場",
+          "scale": 10
+        },
+        {
+          "addr": "筑北村坂井",
+          "scale": 10
+        },
+        {
+          "addr": "筑北村西条",
+          "scale": 10
+        },
+        {
+          "addr": "筑北村坂北",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/04/27 23:35:00",
+      "magnitude": 2.6,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "69ef74fc64680b00075ccf0d",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市役所",
+          "scale": 20
+        },
+        {
+          "addr": "大町市大町図書館",
+          "scale": 20
+        },
+        {
+          "addr": "大町市美麻",
+          "scale": 20
+        },
+        {
+          "addr": "大町市八坂",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/04/28 03:25:00",
+      "magnitude": 2.4,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "69efaae564680b00075ccf66",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市役所",
+          "scale": 10
+        },
+        {
+          "addr": "大町市大町図書館",
+          "scale": 10
+        },
+        {
+          "addr": "大町市八坂",
+          "scale": 10
+        },
+        {
+          "addr": "大町市美麻",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/04/29 16:45:00",
+      "magnitude": 3.4,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 30,
+      "type": "DetailScale",
+      "id": "69f1b7f564680b00075cd30b",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市役所",
+          "scale": 30
+        },
+        {
+          "addr": "大町市美麻",
+          "scale": 30
+        },
+        {
+          "addr": "小川村高府",
+          "scale": 30
+        },
+        {
+          "addr": "大町市大町図書館",
+          "scale": 20
+        },
+        {
+          "addr": "大町市八坂",
+          "scale": 20
+        },
+        {
+          "addr": "長野市大岡",
+          "scale": 20
+        },
+        {
+          "addr": "長野市信州新町新町",
+          "scale": 20
+        },
+        {
+          "addr": "長野市中条",
+          "scale": 20
+        },
+        {
+          "addr": "長野市箱清水",
+          "scale": 10
+        },
+        {
+          "addr": "長野市鶴賀緑町",
+          "scale": 10
+        },
+        {
+          "addr": "長野市鬼無里",
+          "scale": 10
+        },
+        {
+          "addr": "千曲市上山田温泉",
+          "scale": 10
+        },
+        {
+          "addr": "長野池田町池田",
+          "scale": 10
+        },
+        {
+          "addr": "松川村役場",
+          "scale": 10
+        },
+        {
+          "addr": "白馬村北城",
+          "scale": 10
+        },
+        {
+          "addr": "小谷村中小谷",
+          "scale": 10
+        },
+        {
+          "addr": "上田市大手",
+          "scale": 10
+        },
+        {
+          "addr": "生坂村役場",
+          "scale": 10
+        },
+        {
+          "addr": "筑北村西条",
+          "scale": 10
+        },
+        {
+          "addr": "筑北村坂北",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/04/30 22:20:00",
+      "magnitude": 2,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "69f357f864680b00075cd5c5",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市役所",
+          "scale": 10
+        },
+        {
+          "addr": "大町市美麻",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/05/02 03:47:00",
+      "magnitude": 2.1,
+      "depth": 0,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "69f4f5f864680b00075cd8ec",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市役所",
+          "scale": 10
+        },
+        {
+          "addr": "大町市大町図書館",
+          "scale": 10
+        },
+        {
+          "addr": "大町市美麻",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/05/02 13:14:00",
+      "magnitude": 2.2,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "69f57afe64680b00075cd9be",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市役所",
+          "scale": 10
+        },
+        {
+          "addr": "大町市美麻",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/05/02 15:29:00",
+      "magnitude": 3,
+      "depth": 0,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "69f59a7e64680b00075cd9f1",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市役所",
+          "scale": 20
+        },
+        {
+          "addr": "大町市美麻",
+          "scale": 20
+        },
+        {
+          "addr": "大町市大町図書館",
+          "scale": 10
+        },
+        {
+          "addr": "大町市八坂",
+          "scale": 10
+        },
+        {
+          "addr": "松川村役場",
+          "scale": 10
+        },
+        {
+          "addr": "小川村高府",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/05/02 18:39:00",
+      "magnitude": 2,
+      "depth": 0,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "69f5c70f64680b00075cdbcb",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市美麻",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/05/09 08:04:00",
+      "magnitude": 2.4,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "69fe6ccd64680b00075cedd8",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市美麻",
+          "scale": 20
+        },
+        {
+          "addr": "大町市役所",
+          "scale": 10
+        },
+        {
+          "addr": "長野市中条",
+          "scale": 10
+        },
+        {
+          "addr": "小川村高府",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/05/10 07:09:00",
+      "magnitude": 2.2,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "69ffb16f64680b00075cf058",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市役所",
+          "scale": 10
+        },
+        {
+          "addr": "大町市大町図書館",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/05/27 16:10:00",
+      "magnitude": 3.1,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 30,
+      "type": "DetailScale",
+      "id": "6a1699d364680b00075d1a27",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市役所",
+          "scale": 30
+        },
+        {
+          "addr": "大町市大町図書館",
+          "scale": 20
+        },
+        {
+          "addr": "大町市美麻",
+          "scale": 20
+        },
+        {
+          "addr": "小川村高府",
+          "scale": 20
+        },
+        {
+          "addr": "大町市八坂",
+          "scale": 10
+        },
+        {
+          "addr": "長野市大岡",
+          "scale": 10
+        },
+        {
+          "addr": "長野市信州新町新町",
+          "scale": 10
+        },
+        {
+          "addr": "長野市中条",
+          "scale": 10
+        },
+        {
+          "addr": "松川村役場",
+          "scale": 10
+        },
+        {
+          "addr": "生坂村役場",
+          "scale": 10
+        },
+        {
+          "addr": "筑北村西条",
+          "scale": 10
+        },
+        {
+          "addr": "筑北村坂北",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/06/07 15:46:00",
+      "magnitude": 2,
+      "depth": 10,
+      "lat": 36.5,
+      "lon": 137.9,
+      "maxScale": 10,
+      "type": "DetailScale",
+      "id": "6a2514a464680b00075d31f5",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市美麻",
+          "scale": 10
+        },
+        {
+          "addr": "小川村高府",
           "scale": 10
         }
       ]
