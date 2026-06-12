@@ -110,6 +110,22 @@ def main():
     }
     out_path = Path(__file__).resolve().parent.parent / "public" / "data" / "events.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # 退行ガード: 既存データより大幅に件数が減ったら書き込まずに失敗させる
+    # （取得期間やAPIフィルタの退行で系列が黙って切れるのを防ぐ。
+    #   速報の取消・統合による微減は許容する）
+    SHRINK_TOLERANCE = 2
+    if out_path.exists():
+        try:
+            prev_count = json.loads(out_path.read_text()).get("count")
+        except (json.JSONDecodeError, OSError):
+            prev_count = None
+        if isinstance(prev_count, int) and len(events) < prev_count - SHRINK_TOLERANCE:
+            raise SystemExit(
+                f"異常検知: イベント数が {prev_count} → {len(events)} に減少。"
+                "取得期間・フィルタ・APIの退行の可能性があるため書き込みを中断"
+            )
+
     out_path.write_text(json.dumps(out, ensure_ascii=False, indent=2))
 
     # サマリー

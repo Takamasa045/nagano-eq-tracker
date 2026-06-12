@@ -13,15 +13,25 @@ import type { Series } from "../types";
 import { elapsedHours } from "../utils";
 import { CHART } from "../chartTheme";
 
-type Props = { series: Series[]; horizonHours: number };
+type Props = {
+  series: Series[];
+  horizonHours: number;
+  onFocus?: (id: string | null) => void;
+};
 
-export function MTChart({ series, horizonHours }: Props) {
+function payloadId(d: unknown): string | null {
+  const p = (d as { payload?: { id?: string } } | undefined)?.payload;
+  return p?.id ?? null;
+}
+
+export function MTChart({ series, horizonHours, onFocus }: Props) {
   const seriesData = series.map((s) => ({
     name: s.label,
     color: s.color,
     points: s.events
       .filter((e) => e.date >= s.mainshock.date)
       .map((e) => ({
+        id: e.id,
         tHours: elapsedHours(e.date, s.mainshock.date),
         m: e.magnitude,
         time: e.time,
@@ -59,7 +69,18 @@ export function MTChart({ series, horizonHours }: Props) {
         />
         <Legend wrapperStyle={{ color: CHART.legend, fontSize: 11 }} />
         {seriesData.map((s) => (
-          <Scatter key={s.name} name={s.name} data={s.points} fill={s.color} fillOpacity={0.65} />
+          <Scatter
+            key={s.name}
+            name={s.name}
+            data={s.points}
+            fill={s.color}
+            fillOpacity={0.65}
+            onMouseEnter={(d: unknown) => {
+              const id = payloadId(d);
+              if (id) onFocus?.(id);
+            }}
+            onMouseLeave={() => onFocus?.(null)}
+          />
         ))}
       </ScatterChart>
     </ResponsiveContainer>

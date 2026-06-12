@@ -1,13 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import type { Series } from "../types";
+import type { Event, Series } from "../types";
 import { magToRadius } from "../utils";
 import { ISTL_TRACE, PEAKS } from "../geo";
 
-type Props = { series: Series[]; pulseKey?: "A" | "B" };
+export type MapFocus = { id: string; fly: boolean } | null;
+
+type Props = {
+  series: Series[];
+  pulseKey?: "A" | "B";
+  focus?: MapFocus;
+};
 
 const ISTL_COLOR = "#6366f1";
+const PEAK_MIN_ZOOM = 8.4;
 
 const TILE_PRESETS = {
   base: {
@@ -113,10 +120,33 @@ function cameraPadding(): maplibregl.PaddingOptions {
   return { top: 90, bottom: 60, left: 410, right: 480 };
 }
 
-export function MapView({ series, pulseKey }: Props) {
+function popupHtml(s: Series, e: Event): string {
+  const depth = e.depth != null ? `${e.depth}km` : "不明";
+  return (
+    `<div class="eq-pop">` +
+    `<div class="eq-pop__series" style="color:${s.color}">● ${s.label}</div>` +
+    `<div class="eq-pop__time">${e.time}</div>` +
+    `<div class="eq-pop__stats">` +
+    `<span>M<b>${e.magnitude.toFixed(1)}</b></span>` +
+    `<span>震度<b>${e.intensity}</b></span>` +
+    `<span>深さ<b>${depth}</b></span>` +
+    `</div></div>`
+  );
+}
+
+type MarkerEntry = {
+  el: HTMLDivElement;
+  lngLat: [number, number];
+  html: string;
+};
+
+export function MapView({ series, pulseKey, focus }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const markersRef = useRef<maplibregl.Marker[]>([]);
+  const entriesRef = useRef<Map<string, MarkerEntry>>(new Map());
+  const peakElsRef = useRef<HTMLDivElement[]>([]);
+  const popupRef = useRef<maplibregl.Popup | null>(null);
   const [tileKey, setTileKey] = useState<TileKey>("base");
   const [faultOverlay, setFaultOverlay] = useState<boolean>(false);
 
@@ -133,8 +163,20 @@ export function MapView({ series, pulseKey }: Props) {
     map.addControl(new maplibregl.NavigationControl({}), "bottom-right");
     map.addControl(new maplibregl.ScaleControl({}), "bottom-left");
     map.jumpTo({ center: [137.9, 36.55], padding: cameraPadding() });
+    popupRef.current = new maplibregl.Popup({
+      closeButton: true,
+      closeOnClick: true,
+      offset: 14,
+      maxWidth: "260px",
+    });
+    const onZoom = () => {
+      const visible = map.getZoom() >= PEAK_MIN_ZOOM;
+      for (const el of peakElsRef.current) el.style.display = visible ? "" : "none";
+    };
+    map.on("zoom", onZoom);
     mapRef.current = map;
     return () => {
+      map.off("zoom", onZoom);
       map.remove();
       mapRef.current = null;
     };
@@ -153,6 +195,9 @@ export function MapView({ series, pulseKey }: Props) {
     const render = () => {
       markersRef.current.forEach((m) => m.remove());
       markersRef.current = [];
+      entriesRef.current = new Map();
+      peakElsRef.current = [];
+      const peaksVisible = map.getZoom() >= PEAK_MIN_ZOOM;
       for (const p of PEAKS) {
         const el = document.createElement("div");
         el.className = "peak-marker";
@@ -160,10 +205,12 @@ export function MapView({ series, pulseKey }: Props) {
           `<span class="tri">▲</span>` +
           `<span class="nm">${p.name}</span>` +
           `<span class="el">${p.elev.toLocaleString()}m</span>`;
+        el.style.display = peaksVisible ? "" : "none";
         const m = new maplibregl.Marker({ element: el })
           .setLngLat([p.lng, p.lat])
           .addTo(map);
         markersRef.current.push(m);
+        peakElsRef.current.push(el);
       }
       for (const s of series) {
         for (const e of s.events) {
@@ -177,11 +224,15 @@ export function MapView({ series, pulseKey }: Props) {
           el.style.background = `${s.color}40`;
           el.style.border = `1.5px solid ${s.color}`;
           el.style.boxSizing = "border-box";
-          el.title = `${s.label}\n${e.time}\nM${e.magnitude} 震度${e.intensity} 深さ${e.depth}km`;
-          const m = new maplibregl.Marker({ element: el })
-            .setLngLat([e.lon, e.lat])
-            .addTo(map);
+          const lngLat: [number, number] = [e.lon, e.lat];
+          const html = popupHtml(s, e);
+          el.addEventListener("click", (ev) => {
+            ev.stopPropagation();
+            popupRef.current?.setLngLat(lngLat).setHTML(html).addTo(map);
+          });
+          const m = new maplibregl.Marker({ element: el }).setLngLat(lngLat).addTo(map);
           markersRef.current.push(m);
+          entriesRef.current.set(e.id, { el, lngLat, html });
         }
       }
     };
@@ -192,6 +243,26 @@ export function MapView({ series, pulseKey }: Props) {
       map.off("styledata", onStyle);
     };
   }, [series, pulseKey, tileKey, faultOverlay]);
+
+  // チャート・リストからのフォーカス連動
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    for (const entry of entriesRef.current.values()) entry.el.classList.remove("focused");
+    if (!focus) return;
+    const entry = entriesRef.current.get(focus.id);
+    if (!entry) return;
+    entry.el.classList.add("focused");
+    if (focus.fly) {
+      map.flyTo({
+        center: entry.lngLat,
+        zoom: Math.max(map.getZoom(), 10.4),
+        padding: cameraPadding(),
+        duration: 900,
+      });
+      popupRef.current?.setLngLat(entry.lngLat).setHTML(entry.html).addTo(map);
+    }
+  }, [focus]);
 
   return (
     <div className="map-wrap">

@@ -154,6 +154,17 @@ a:hover { color: var(--ink); border-color: var(--ink); }
   white-space: nowrap;
 }
 
+.hud__stale {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #92400e;
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 999px;
+  padding: 3px 12px;
+  white-space: nowrap;
+}
+
 /* ─── 左ヒーローパネル ─── */
 .hero {
   position: fixed;
@@ -531,8 +542,39 @@ a:hover { color: var(--ink); border-color: var(--ink); }
 }
 
 /* 震源マーカー */
-.eq-marker { cursor: help; transition: transform 0.2s; }
+.eq-marker { cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
 .eq-marker:hover { transform: scale(1.4); z-index: 10; }
+
+.eq-marker.focused {
+  transform: scale(1.5);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.4) !important;
+  z-index: 20;
+}
+
+/* マーカーポップアップ */
+.maplibregl-popup-content {
+  font-family: var(--sans);
+  background: var(--panel-solid) !important;
+  border: 1px solid var(--line);
+  border-radius: 14px !important;
+  box-shadow: 0 12px 32px -12px rgba(24, 24, 27, 0.3) !important;
+  padding: 12px 16px 10px !important;
+  color: var(--ink);
+}
+
+.maplibregl-popup-close-button {
+  font-size: 16px;
+  color: var(--ink-faint);
+  right: 6px;
+  top: 4px;
+}
+
+.maplibregl-popup-tip { border-top-color: var(--panel-solid) !important; border-bottom-color: var(--panel-solid) !important; }
+
+.eq-pop__series { font-size: 0.68rem; font-weight: 700; margin-bottom: 3px; }
+.eq-pop__time { font-family: var(--mono); font-size: 0.74rem; color: var(--ink-soft); margin-bottom: 6px; }
+.eq-pop__stats { display: flex; gap: 12px; font-size: 0.7rem; color: var(--ink-soft); }
+.eq-pop__stats b { color: var(--ink); font-size: 0.86rem; margin-left: 2px; font-feature-settings: "tnum"; }
 .eq-marker.pulse { animation: pulse 3.2s ease-out infinite; }
 
 @keyframes pulse {
@@ -750,6 +792,42 @@ a:hover { color: var(--ink); border-color: var(--ink); }
 .readings .t { font-family: var(--serif); font-size: 0.92rem; font-weight: 700; letter-spacing: 0.04em; }
 .readings .s { font-size: 0.72rem; color: var(--ink-soft); line-height: 1.5; }
 .readings .a { font-size: 0.72rem; font-weight: 600; color: var(--cyan); margin-top: 4px; }
+
+/* ─── 最近の揺れリスト ─── */
+.recent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.recent-list button {
+  display: grid;
+  grid-template-columns: auto auto auto 1fr;
+  gap: 12px;
+  align-items: baseline;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 8px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+}
+
+.recent-list li:last-child button { border-bottom: none; }
+.recent-list button:hover { background: var(--panel-raise); }
+
+.recent-list__time { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint); font-feature-settings: "tnum"; }
+.recent-list__m { font-weight: 700; color: var(--vermilion); font-feature-settings: "tnum"; }
+.recent-list__int { color: var(--ink); font-weight: 500; }
+.recent-list__depth { justify-self: end; font-size: 0.7rem; color: var(--ink-faint); font-feature-settings: "tnum"; }
 
 /* ─── 観測サマリー：グラデーション枠カード ─── */
 .note-panel {

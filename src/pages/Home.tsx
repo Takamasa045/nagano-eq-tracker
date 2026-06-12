@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Dataset, Event, Series } from "../types";
 import { enrich, MAINSHOCK_A_TIME, MAINSHOCK_B_TIME, intensityLabel } from "../utils";
-import { MapView } from "../components/MapView";
+import { buildFieldNote, hoursSince, STALE_THRESHOLD_HOURS } from "../fieldNote";
+import { MapView, type MapFocus } from "../components/MapView";
 import { CumulativeChart } from "../components/CumulativeChart";
 import { MTChart } from "../components/MTChart";
 import { RateChart } from "../components/RateChart";
@@ -37,33 +38,6 @@ function formatFetchedAt(iso: string): string {
   }).format(d) + " JST";
 }
 
-/** 観測メモ：直近の活動をやさしい言葉に変換（しきい値は決め打ち） */
-function buildFieldNote(series: Series[], fetchedAt: string): { days: number; lines: React.ReactNode[] } | null {
-  const now = new Date(fetchedAt);
-  if (Number.isNaN(now.getTime())) return null;
-  const DAY = 86_400_000;
-  const [a, b] = series;
-  const days = Math.max(0, Math.floor((now.getTime() - b.mainshock.date.getTime()) / DAY));
-  const recentB = b.events.filter((e) => now.getTime() - e.date.getTime() <= 7 * DAY).length;
-  const refEnd = a.mainshock.date.getTime() + days * DAY;
-  const refA = a.events.filter((e) => {
-    const t = e.date.getTime();
-    return t <= refEnd && refEnd - t <= 7 * DAY;
-  }).length;
-  const mood =
-    recentB === 0 ? "山はとてもしずかです。"
-    : recentB <= 3 ? "だいぶ落ち着いてきました。"
-    : recentB <= 10 ? "まだ地面がときどき、そわそわしています。"
-    : "活発な状態がつづいています。";
-  return {
-    days,
-    lines: [
-      <>本震から <strong>{days}日目</strong>。この7日間の有感余震は <strong>{recentB}回</strong>。{mood}</>,
-      <>ちなみに去年の系列は、同じ{days}日目ごろの7日間で <strong>{refA}回</strong> でした。</>,
-    ],
-  };
-}
-
 interface PanelProps {
   no: string;
   en: string;
@@ -92,6 +66,7 @@ export function Home() {
   const [dataset, setDataset] = useState<Dataset | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [horizonIdx, setHorizonIdx] = useState(2);
+  const [focus, setFocus] = useState<MapFocus>(null);
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}data/events.json`)
@@ -119,6 +94,12 @@ export function Home() {
 
   const preset = HORIZON_PRESETS[horizonIdx];
   const note = buildFieldNote(series, dataset.fetched_at);
+  const staleHours = hoursSince(dataset.fetched_at);
+  const isStale = staleHours != null && staleHours > STALE_THRESHOLD_HOURS;
+  const recent = [...series[1].events]
+    .sort((a, b) => b.date.getTime() - a.date.getTime())
+    .slice(0, 8);
+  const chartFocus = (id: string | null) => setFocus(id ? { id, fly: false } : null);
 
   return (
     <div className="obs-room">
@@ -132,6 +113,11 @@ export function Home() {
           <button onClick={() => navigate("istl")}>糸魚川-静岡構造線</button>
           <button onClick={() => navigate("geology")}>北アルプスと縫い目</button>
         </nav>
+        {isStale && (
+          <span className="hud__stale" role="alert">
+            ⚠ データ更新が{Math.floor(staleHours)}時間止まっています
+          </span>
+        )}
         <div className="hud__meta">
           <span>UPDATED {formatFetchedAt(dataset.fetched_at)}</span>
           <span>{dataset.count} EVENTS</span>
@@ -139,7 +125,7 @@ export function Home() {
       </header>
 
       <div className="obs-map">
-        <MapView series={series} pulseKey="B" />
+        <MapView series={series} pulseKey="B" focus={focus} />
       </div>
 
       <aside className="hero">
@@ -195,37 +181,61 @@ export function Home() {
               いまのようす
               <span>{formatFetchedAt(dataset.fetched_at)}</span>
             </h2>
-            {note.lines.map((line, i) => (
-              <p key={i}>{line}</p>
-            ))}
+            <p>
+              本震から <strong>{note.days}日目</strong>。この7日間の有感余震は{" "}
+              <strong>{note.recentB}回</strong>。{note.mood}
+            </p>
+            <p>
+              ちなみに去年の系列は、同じ{note.days}日目ごろの7日間で{" "}
+              <strong>{note.refA}回</strong> でした。
+            </p>
           </section>
         )}
 
-        <Panel no="01" en="CUMULATIVE" title="累積回数" sub="本震時刻を 0 に揃えて重ね描き。線が寝てくれば沈静化の合図">
+        <Panel no="01" en="RECENT" title="最近の揺れ" sub="今年の系列の直近8件。タップでマップへ">
+          <ol className="recent-list">
+            {recent.map((e) => (
+              <li key={e.id}>
+                <button onClick={() => setFocus({ id: e.id, fly: true })}>
+                  <span className="recent-list__time">
+                    {e.time.slice(5, 16).replace("/", ".")}
+                  </span>
+                  <span className="recent-list__m">M{e.magnitude.toFixed(1)}</span>
+                  <span className="recent-list__int">震度{e.intensity}</span>
+                  <span className="recent-list__depth">
+                    {e.depth != null ? `深さ${e.depth}km` : ""}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ol>
+        </Panel>
+
+        <Panel no="02" en="CUMULATIVE" title="累積回数" sub="本震時刻を 0 に揃えて重ね描き。線が寝てくれば沈静化の合図">
           <CumulativeChart series={series} horizonHours={preset.hours} />
         </Panel>
 
-        <Panel no="02" en="MAGNITUDE–TIME" title="M-T 散布" sub="時間 × マグニチュード。点の大きさは規模に比例">
-          <MTChart series={series} horizonHours={preset.hours} />
+        <Panel no="03" en="MAGNITUDE–TIME" title="M-T 散布" sub="時間 × マグニチュード。点にふれるとマップが光ります">
+          <MTChart series={series} horizonHours={preset.hours} onFocus={chartFocus} />
         </Panel>
 
-        <Panel no="03" en="DECAY RATE" title="発生頻度" sub="1時間あたりの回数と大森-宇津則フィット（参考）">
+        <Panel no="04" en="DECAY RATE" title="発生頻度" sub="1時間あたりの回数と大森-宇津則フィット（参考）">
           <RateChart series={series} horizonHours={preset.hours} binHours={preset.bin} />
         </Panel>
 
-        <Panel no="04" en="E–W SECTION" title="東西断面" sub="経度 × 深さ。震源は地殻浅部 10km 前後に集中">
-          <DepthChart series={series} />
+        <Panel no="05" en="E–W SECTION" title="東西断面" sub="経度 × 深さ。震源は地殻浅部 10km 前後に集中">
+          <DepthChart series={series} onFocus={chartFocus} />
         </Panel>
 
-        <Panel no="05" en="INTENSITY" title="震度別回数" sub="各震度階級で何回観測されたか">
+        <Panel no="06" en="INTENSITY" title="震度別回数" sub="各震度階級で何回観測されたか">
           <IntensityHistogram series={series} />
         </Panel>
 
-        <Panel no="06" en="STATIONS" title="震度観測点" sub="本震の長野県内・気象庁発表値">
+        <Panel no="07" en="STATIONS" title="震度観測点" sub="本震の長野県内・気象庁発表値">
           <MainShockObsPoints series={series} />
         </Panel>
 
-        <Panel no="07" en="FAULT CONTEXT" title="活断層の文脈" sub="糸魚川-静岡構造線（ISTL）長期評価">
+        <Panel no="08" en="FAULT CONTEXT" title="活断層の文脈" sub="糸魚川-静岡構造線（ISTL）長期評価">
           <ul className="istl-rows">
             <li>
               <span className="l">北部区間（小谷–明科）</span>
@@ -251,7 +261,7 @@ export function Home() {
           </p>
         </Panel>
 
-        <Panel no="08" en="READINGS" title="読みもの" sub="背景を知るための2本">
+        <Panel no="09" en="READINGS" title="読みもの" sub="背景を知るための2本">
           <div className="readings">
             <button onClick={() => navigate("istl")}>
               <span className="t">糸魚川-静岡構造線</span>

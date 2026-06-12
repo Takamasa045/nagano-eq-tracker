@@ -13,14 +13,22 @@ import {
 import type { Series } from "../types";
 import { CHART } from "../chartTheme";
 
-type Props = { series: Series[] };
+type Props = {
+  series: Series[];
+  onFocus?: (id: string | null) => void;
+};
+
+function payloadId(d: unknown): string | null {
+  const p = (d as { payload?: { id?: string } } | undefined)?.payload;
+  return p?.id ?? null;
+}
 
 /**
  * E-W 縦断面: 経度を横軸、深さ(km)を縦軸に。
  * 震源域はフォッサマグナ西縁・糸魚川-静岡構造線(ISTL)の近傍にあり、
  * 浅部に集中するのが特徴。
  */
-export function DepthChart({ series }: Props) {
+export function DepthChart({ series, onFocus }: Props) {
   // P2P APIの震源は0.1°精度なので、ほぼ同一座標に集中する。
   // 同位置の重なりを可視化するため、deterministicな擬似ジッタを加える。
   const jitter = (seed: string) => {
@@ -39,6 +47,7 @@ export function DepthChart({ series }: Props) {
       .map((e) => {
         const { lonJ, depJ } = jitter(e.id);
         return {
+          id: e.id,
           lon: e.lon + lonJ,
           depth: Math.max(0, (e.depth ?? 10) + depJ),
           m: e.magnitude,
@@ -86,7 +95,18 @@ export function DepthChart({ series }: Props) {
         {/* ISTL推定通過位置（北部で東経137.85°前後） */}
         <ReferenceLine x={137.85} stroke={CHART.refLine} strokeDasharray="6 3" label={{ value: "ISTL付近", position: "top", fill: CHART.refLine, fontSize: 10 }} />
         {data.map((s) => (
-          <Scatter key={s.name} name={s.name} data={s.points} fill={s.color} fillOpacity={0.65} />
+          <Scatter
+            key={s.name}
+            name={s.name}
+            data={s.points}
+            fill={s.color}
+            fillOpacity={0.65}
+            onMouseEnter={(d: unknown) => {
+              const id = payloadId(d);
+              if (id) onFocus?.(id);
+            }}
+            onMouseLeave={() => onFocus?.(null)}
+          />
         ))}
       </ScatterChart>
     </ResponsiveContainer>
