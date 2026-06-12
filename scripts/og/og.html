@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+JP:wght@500;700&family=Zen+Old+Mincho:wght@700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; box-sizing: border-box; }
+html, body { width: 1200px; height: 630px; overflow: hidden; }
+body {
+  position: relative;
+  font-family: "Inter", "Noto Sans JP", sans-serif;
+  background: #f7f6f4;
+  color: #18181b;
+}
+.pattern {
+  position: absolute; inset: 0;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56"><g fill="none" stroke="%2318181b" stroke-opacity="0.06" stroke-width="1.5"><circle cx="0" cy="28" r="26"/><circle cx="56" cy="28" r="26"/><circle cx="28" cy="0" r="26"/><circle cx="28" cy="56" r="26"/></g></svg>') 0 0 / 56px 56px;
+}
+.blob-a {
+  position: absolute; width: 720px; height: 480px; right: -160px; top: -200px;
+  background: radial-gradient(closest-side, rgba(245, 158, 11, 0.22), transparent 70%);
+}
+.blob-b {
+  position: absolute; width: 680px; height: 460px; left: -180px; bottom: -220px;
+  background: radial-gradient(closest-side, rgba(244, 63, 94, 0.18), transparent 70%);
+}
+.frame {
+  position: absolute; inset: 28px;
+  background: rgba(255, 255, 255, 0.66);
+  border: 1px solid rgba(24, 24, 27, 0.08);
+  border-radius: 32px;
+  box-shadow: 0 24px 60px -30px rgba(24, 24, 27, 0.25);
+  padding: 52px 64px 48px;
+  display: flex; flex-direction: column;
+}
+.brand { display: flex; align-items: center; gap: 16px; }
+.brand svg { width: 46px; height: 46px; }
+.brand strong {
+  font-family: "Zen Old Mincho", serif;
+  font-size: 26px; font-weight: 700; letter-spacing: 0.08em;
+}
+.brand span {
+  font-size: 12px; letter-spacing: 0.3em; color: #a1a1aa; margin-left: 6px;
+}
+h1 {
+  font-family: "Zen Old Mincho", serif;
+  font-weight: 900;
+  font-size: 84px;
+  letter-spacing: 0.02em;
+  line-height: 1.32;
+  margin-top: 40px;
+}
+h1 em {
+  white-space: nowrap;
+  font-style: normal;
+  background: linear-gradient(135deg, #f59e0b, #f43f5e);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.sub {
+  margin-top: 26px;
+  font-size: 24px; line-height: 1.7; color: #52525b; font-weight: 500;
+  max-width: 880px;
+}
+.pills { display: flex; gap: 14px; margin-top: auto; }
+.pill {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #fff; border: 1px solid rgba(24, 24, 27, 0.1);
+  border-radius: 999px; padding: 12px 24px;
+  font-size: 21px; font-weight: 700; font-feature-settings: "tnum";
+}
+.pill .dot { width: 12px; height: 12px; border-radius: 50%; }
+.pill.a .dot { background: #f59e0b; }
+.pill.b .dot { background: #f43f5e; }
+.pill small { font-weight: 500; color: #52525b; font-size: 18px; }
+.side {
+  position: absolute; top: 70px; right: 64px;
+  display: flex; flex-direction: column; align-items: center; gap: 22px;
+}
+.vtag {
+  writing-mode: vertical-rl;
+  font-family: "Zen Old Mincho", serif;
+  font-size: 21px; letter-spacing: 0.34em; color: #a1a1aa; font-weight: 700;
+}
+.stamp {
+  width: 52px; height: 52px; display: grid; place-items: center;
+  background: #c73e2c; color: #fff;
+  font-family: "Zen Old Mincho", serif; font-weight: 700; font-size: 30px;
+  border-radius: 10px; transform: rotate(-4deg);
+  box-shadow: 0 6px 18px -6px rgba(199, 62, 44, 0.55);
+}
+</style>
+</head>
+<body>
+  <div class="pattern"></div>
+  <div class="blob-a"></div>
+  <div class="blob-b"></div>
+  <div class="frame">
+    <div class="brand">
+      <svg viewBox="0 0 64 64">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#f59e0b"/><stop offset="1" stop-color="#f43f5e"/>
+        </linearGradient></defs>
+        <rect width="64" height="64" rx="14" fill="url(#g)"/>
+        <path d="M10 38 h12 l3 -8 5 16 4 -24 5 28 4 -16 2 4 h9" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <strong>長野県北部・余震観測室</strong>
+      <span>NAGANO AFTERSHOCK OBSERVATORY</span>
+    </div>
+    <h1>また同じ日に、<br><em>揺れた。</em></h1>
+    <p class="sub">一年違いの4月18日に起きた二つの本震。余震のゆくえを、経過時間を揃えて重ねて記録しています。</p>
+    <div class="pills">
+      <span class="pill a"><span class="dot"></span>2025.04.18 <small>20:19</small></span>
+      <span class="pill b"><span class="dot"></span>2026.04.18 <small>13:20</small></span>
+    </div>
+  </div>
+  <div class="side">
+    <span class="vtag">二つの四月の記録</span>
+    <span class="stamp">観</span>
+  </div>
+</body>
+</html>
