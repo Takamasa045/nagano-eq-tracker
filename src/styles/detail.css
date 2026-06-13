@@ -1,0 +1,382 @@
+/* ═══════════════ 詳細ページ（istl / geology） ═══════════════ */
+
+.app[data-route="istl"],
+.app[data-route="geology"] {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 20px 20px 80px;
+}
+
+.crumbs { padding: 8px 0 20px; }
+
+.crumbs button {
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  cursor: pointer;
+  padding: 5px 16px;
+  font-family: inherit;
+  letter-spacing: 0.04em;
+}
+
+.crumbs button:hover { color: var(--ink); border-color: var(--ink-soft); }
+
+.detail-hero {
+  padding: 28px 0 32px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.detail-hero__eyebrow {
+  display: inline-block;
+  font-size: 0.64rem;
+  letter-spacing: 0.3em;
+  color: var(--cyan);
+  border: 1px solid rgba(127, 176, 212, 0.4);
+  border-radius: 3px;
+  padding: 3px 10px;
+  margin-bottom: 18px;
+}
+
+.detail-hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  font-weight: 700;
+  margin: 0 0 12px;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+}
+
+.detail-hero__ruby {
+  display: block;
+  font-size: 0.34em;
+  letter-spacing: 0.3em;
+  margin-bottom: 8px;
+  color: var(--ink-faint);
+  font-weight: 500;
+}
+
+.detail-hero__sub {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--ink-soft);
+  max-width: 62ch;
+  margin: 0;
+}
+
+.detail-hero__sub strong { color: var(--ink); font-weight: 700; }
+
+/* ZINE → 計器パネル化 */
+.zine { display: grid; gap: 18px; margin-bottom: 30px; }
+
+.zine__panel {
+  position: relative;
+  background: var(--panel-solid);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 30px 28px 24px;
+}
+
+.zine__panel--tint { border-top: 2px solid var(--cyan); }
+.zine__panel--dark { background: var(--panel-raise); }
+.zine__panel--note { border-left: 2px solid var(--vermilion); }
+
+.zine__num {
+  position: absolute;
+  top: -13px;
+  left: 22px;
+  padding: 3px 12px;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  color: var(--gold);
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 0.84rem;
+  border-radius: 4px;
+  letter-spacing: 0.1em;
+}
+
+.zine__panel h2 {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  margin: 0 0 14px;
+  letter-spacing: 0.04em;
+}
+
+.zine__panel p {
+  font-size: 0.92rem;
+  line-height: 1.95;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+}
+
+.zine__panel p.seg-intro {
+  color: var(--ink);
+  font-size: 0.96rem;
+  border-left: 2px solid var(--cyan);
+  padding-left: 12px;
+}
+
+.zine__panel em {
+  font-style: normal;
+  color: var(--ink);
+  border-bottom: 1px solid rgba(225, 29, 72, 0.4);
+}
+
+.facts-strip {
+  list-style: none;
+  margin: 14px 0 6px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+}
+
+.facts-strip li {
+  background: var(--panel-raise);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 12px;
+}
+
+.facts-strip span {
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  color: var(--ink-faint);
+  margin-bottom: 3px;
+}
+
+.facts-strip strong {
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  color: var(--ink);
+}
+
+/* 区間カード */
+.seg-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin: 18px 0 10px;
+}
+
+.seg-card {
+  background: var(--panel-raise);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px 16px 14px;
+}
+
+.seg-card[data-idx="0"] { border-top: 2px solid var(--cyan); }
+.seg-card[data-idx="1"] { border-top: 2px solid var(--moss); }
+.seg-card[data-idx="2"] { border-top: 2px solid var(--gold); }
+.seg-card[data-idx="3"] { border-top: 2px solid var(--vermilion); }
+
+.seg-card__head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+
+.seg-card__marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 6px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.seg-card[data-idx="0"] .seg-card__marker { color: var(--cyan); }
+.seg-card[data-idx="1"] .seg-card__marker { color: var(--moss); }
+.seg-card[data-idx="2"] .seg-card__marker { color: var(--gold); }
+.seg-card[data-idx="3"] .seg-card__marker { color: var(--vermilion); }
+
+.seg-card h3 { font-family: var(--serif); font-size: 0.96rem; margin: 0; }
+.seg-card__range { font-size: 0.7rem; color: var(--ink-faint); margin: 2px 0 0; }
+
+.seg-card dl { margin: 0; display: grid; gap: 5px; font-size: 0.78rem; }
+.seg-card dl > div { display: grid; grid-template-columns: 74px 1fr; gap: 8px; align-items: baseline; }
+.seg-card dt { color: var(--ink-faint); font-size: 0.68rem; letter-spacing: 0.06em; }
+.seg-card dd { margin: 0; color: var(--ink-soft); line-height: 1.55; font-feature-settings: "tnum"; }
+.seg-card dd.prob { color: var(--vermilion); font-weight: 700; }
+
+/* 比較カード */
+.compare-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0 8px; }
+
+.compare-card {
+  background: var(--panel-raise);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px 12px;
+}
+
+.compare-card--latest { border-color: rgba(225, 29, 72, 0.45); }
+
+.compare-card h3 { margin: 0; font-family: var(--serif); font-size: 1rem; }
+.compare-card__sub { margin: 2px 0 10px; font-size: 0.7rem; color: var(--ink-faint); }
+.compare-card dl { margin: 0; display: grid; gap: 6px; }
+.compare-card dl > div {
+  display: grid;
+  grid-template-columns: 6.5em 1fr;
+  gap: 6px;
+  padding: 5px 0;
+  border-top: 1px solid var(--line);
+  font-size: 0.76rem;
+  align-items: baseline;
+}
+.compare-card dl > div:first-child { border-top: none; }
+.compare-card dt { color: var(--ink-faint); }
+.compare-card dd { margin: 0; color: var(--ink-soft); font-feature-settings: "tnum"; }
+.compare-card__rel { font-size: 0.72rem; line-height: 1.55; }
+
+@media (max-width: 800px) { .compare-grid { grid-template-columns: 1fr; } }
+
+/* タイムライン */
+.timeline { list-style: none; margin: 18px 0 0; padding: 0; position: relative; }
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 10px; bottom: 10px;
+  left: 88px;
+  width: 1px;
+  background: var(--line-strong);
+}
+
+.timeline__item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 22px;
+  padding: 10px 0;
+  position: relative;
+}
+
+.timeline__dot {
+  position: absolute;
+  left: 84px;
+  top: 22px;
+  width: 9px; height: 9px;
+  background: var(--vermilion);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
+}
+
+.timeline__date {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--gold);
+  text-align: right;
+  padding-top: 16px;
+}
+
+.timeline__body { padding-left: 20px; padding-top: 8px; }
+.timeline__body h4 { font-family: var(--serif); font-size: 0.98rem; margin: 0 0 4px; letter-spacing: 0.03em; }
+.timeline__m { font-size: 0.74rem; color: var(--vermilion); font-weight: 500; margin-left: 6px; font-family: var(--mono); }
+.timeline__body p { margin: 0; font-size: 0.82rem; line-height: 1.7; color: var(--ink-soft); }
+
+/* データリンク */
+.datalinks {
+  list-style: none;
+  margin: 12px 0 8px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.datalinks li {
+  background: var(--panel-raise);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px 9px;
+  display: grid;
+  gap: 4px;
+}
+
+.datalinks a { font-weight: 600; font-size: 0.86rem; width: max-content; }
+.datalinks span { font-size: 0.72rem; color: var(--ink-faint); line-height: 1.5; }
+
+@media (max-width: 800px) { .datalinks { grid-template-columns: 1fr; } }
+
+/* 山リスト */
+.peaks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.peaks li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 0 10px;
+  padding: 10px 14px;
+  background: var(--panel-raise);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 0.82rem;
+}
+
+.peak-name { font-family: var(--serif); font-weight: 700; font-size: 0.94rem; }
+.peak-elev { text-align: right; font-family: var(--mono); color: var(--cyan); font-weight: 600; }
+.peak-dist { grid-column: 1 / -1; font-size: 0.7rem; color: var(--ink-faint); margin-top: 2px; }
+
+/* ページャ */
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0 12px;
+  padding: 18px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.pager button {
+  font-family: inherit;
+  font-size: 0.84rem;
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 8px 20px;
+  cursor: pointer;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  transition: all 0.15s ease;
+}
+
+.pager button:hover { color: var(--ink); border-color: var(--ink-soft); }
+
+.pager__next { background: var(--ink); color: var(--bg) !important; border-color: var(--ink) !important; font-weight: 600; }
+.pager__next:hover { opacity: 0.9; }
+
+/* 共通フッター（詳細ページ用） */
+.footer {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 0.74rem;
+  color: var(--ink-faint);
+  line-height: 1.7;
+}
+
+.footer .credit { font-size: 0.68rem; margin-top: 6px; }
+
+.footer .disclaimer {
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  border: 1px solid rgba(225, 29, 72, 0.35);
+  border-radius: 8px;
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+}
+
+.footer .disclaimer strong { color: var(--vermilion); }

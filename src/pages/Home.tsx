@@ -1,15 +1,29 @@
-import { useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import type { Dataset, Event, Series } from "../types";
 import { enrich, MAINSHOCK_A_TIME, MAINSHOCK_B_TIME, intensityLabel } from "../utils";
 import { buildFieldNote, hoursSince, STALE_THRESHOLD_HOURS } from "../fieldNote";
 import { MapView, type MapFocus } from "../components/MapView";
-import { CumulativeChart } from "../components/CumulativeChart";
-import { MTChart } from "../components/MTChart";
-import { RateChart } from "../components/RateChart";
-import { DepthChart } from "../components/DepthChart";
 import { MainShockObsPoints } from "../components/MainShockObsPoints";
 import { IntensityHistogram } from "../components/IntensityHistogram";
 import { navigate } from "../router";
+
+// Recharts 依存のチャート群は遅延読み込みして初期バンドルから外す
+const CumulativeChart = lazy(() =>
+  import("../components/CumulativeChart").then((m) => ({ default: m.CumulativeChart })),
+);
+const MTChart = lazy(() =>
+  import("../components/MTChart").then((m) => ({ default: m.MTChart })),
+);
+const RateChart = lazy(() =>
+  import("../components/RateChart").then((m) => ({ default: m.RateChart })),
+);
+const DepthChart = lazy(() =>
+  import("../components/DepthChart").then((m) => ({ default: m.DepthChart })),
+);
+
+function ChartFallback() {
+  return <div className="chart-fallback" aria-hidden />;
+}
 
 const HORIZON_PRESETS = [
   { label: "六時間", hours: 6, bin: 0.25 },
@@ -212,19 +226,27 @@ export function Home() {
         </Panel>
 
         <Panel no="02" en="CUMULATIVE" title="累積回数" sub="本震時刻を 0 に揃えて重ね描き。線が寝てくれば沈静化の合図">
-          <CumulativeChart series={series} horizonHours={preset.hours} />
+          <Suspense fallback={<ChartFallback />}>
+            <CumulativeChart series={series} horizonHours={preset.hours} />
+          </Suspense>
         </Panel>
 
         <Panel no="03" en="MAGNITUDE–TIME" title="M-T 散布" sub="時間 × マグニチュード。点にふれるとマップが光ります">
-          <MTChart series={series} horizonHours={preset.hours} onFocus={chartFocus} />
+          <Suspense fallback={<ChartFallback />}>
+            <MTChart series={series} horizonHours={preset.hours} onFocus={chartFocus} />
+          </Suspense>
         </Panel>
 
         <Panel no="04" en="DECAY RATE" title="発生頻度" sub="1時間あたりの回数と大森-宇津則フィット（参考）">
-          <RateChart series={series} horizonHours={preset.hours} binHours={preset.bin} />
+          <Suspense fallback={<ChartFallback />}>
+            <RateChart series={series} horizonHours={preset.hours} binHours={preset.bin} />
+          </Suspense>
         </Panel>
 
         <Panel no="05" en="E–W SECTION" title="東西断面" sub="経度 × 深さ。震源は地殻浅部 10km 前後に集中">
-          <DepthChart series={series} onFocus={chartFocus} />
+          <Suspense fallback={<ChartFallback />}>
+            <DepthChart series={series} onFocus={chartFocus} />
+          </Suspense>
         </Panel>
 
         <Panel no="06" en="INTENSITY" title="震度別回数" sub="各震度階級で何回観測されたか">

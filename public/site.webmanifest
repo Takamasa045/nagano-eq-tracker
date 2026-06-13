@@ -1,0 +1,27 @@
+{
+  "name": "長野県北部・余震観測室",
+  "short_name": "余震観測室",
+  "description": "2025年と2026年、一年違いの4月18日に起きた二つの本震。余震のゆくえを経過時間を揃えて記録するトラッカー。",
+  "lang": "ja",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f6f4",
+  "theme_color": "#f7f6f4",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
