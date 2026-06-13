@@ -205,6 +205,7 @@ export function MapView({ series, pulseKey, focus }: Props) {
           `<span class="tri">▲</span>` +
           `<span class="nm">${p.name}</span>` +
           `<span class="el">${p.elev.toLocaleString()}m</span>`;
+        el.setAttribute("aria-hidden", "true");
         el.style.display = peaksVisible ? "" : "none";
         const m = new maplibregl.Marker({ element: el })
           .setLngLat([p.lng, p.lat])
@@ -217,18 +218,39 @@ export function MapView({ series, pulseKey, focus }: Props) {
           const r = magToRadius(e.magnitude);
           const isMainshock = e.time === s.mainshock.time;
           const el = document.createElement("div");
-          el.className = `eq-marker${isMainshock && pulseKey === s.key ? " pulse" : ""}`;
+          el.className = `eq-marker eq-marker--${s.key}${isMainshock && pulseKey === s.key ? " pulse" : ""}`;
           el.style.width = `${r * 2}px`;
           el.style.height = `${r * 2}px`;
           el.style.borderRadius = "50%";
-          el.style.background = `${s.color}40`;
-          el.style.border = `1.5px solid ${s.color}`;
           el.style.boxSizing = "border-box";
+          // 色覚多様性対応: 色相に加えて「形」でも区別する
+          //   2025(A) = 中空リング / 2026(B) = 塗りつぶし
+          if (s.key === "A") {
+            el.style.background = "transparent";
+            el.style.border = `2px solid ${s.color}`;
+          } else {
+            el.style.background = `${s.color}73`;
+            el.style.border = `1.5px solid ${s.color}`;
+          }
           const lngLat: [number, number] = [e.lon, e.lat];
           const html = popupHtml(s, e);
+          const depthLabel = e.depth != null ? `深さ${e.depth}キロ` : "深さ不明";
+          el.setAttribute("role", "button");
+          el.setAttribute("tabindex", "0");
+          el.setAttribute(
+            "aria-label",
+            `${s.label} ${e.time} マグニチュード${e.magnitude.toFixed(1)} 震度${e.intensity} ${depthLabel}`,
+          );
+          const open = () => popupRef.current?.setLngLat(lngLat).setHTML(html).addTo(map);
           el.addEventListener("click", (ev) => {
             ev.stopPropagation();
-            popupRef.current?.setLngLat(lngLat).setHTML(html).addTo(map);
+            open();
+          });
+          el.addEventListener("keydown", (ev) => {
+            if (ev.key === "Enter" || ev.key === " ") {
+              ev.preventDefault();
+              open();
+            }
           });
           const m = new maplibregl.Marker({ element: el }).setLngLat(lngLat).addTo(map);
           markersRef.current.push(m);
@@ -285,7 +307,7 @@ export function MapView({ series, pulseKey, focus }: Props) {
           活断層図 {faultOverlay ? "ON" : "OFF"}
         </button>
         <span className="legend">
-          <span className="legend-dot" style={{ background: series[0]?.color }} /> 2025
+          <span className="legend-dot legend-dot--ring" style={{ borderColor: series[0]?.color }} /> 2025
           <span className="legend-dot" style={{ background: series[1]?.color }} /> 2026
           <span className="legend-line" /> ISTL
         </span>

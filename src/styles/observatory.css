@@ -456,6 +456,12 @@
   display: inline-block;
 }
 
+/* 2025は中空リングで表現（色覚多様性対応） */
+.map-controls .legend-dot--ring {
+  background: transparent !important;
+  border: 2px solid;
+}
+
 .map-controls .legend-line {
   display: inline-block;
   width: 22px;
@@ -485,6 +491,12 @@
 .eq-marker.focused {
   transform: scale(1.5);
   box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.4) !important;
+  z-index: 20;
+}
+
+.eq-marker:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.55) !important;
   z-index: 20;
 }
 

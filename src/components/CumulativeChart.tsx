@@ -57,6 +57,7 @@ export function CumulativeChart({ series, horizonHours }: Props) {
           stroke={series[0].color}
           dot={false}
           strokeWidth={2}
+          strokeDasharray="6 4"
           connectNulls
         />
         <Line

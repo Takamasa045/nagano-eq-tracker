@@ -42,6 +42,7 @@ export function DepthChart({ series, onFocus }: Props) {
   const data = series.map((s) => ({
     name: s.label,
     color: s.color,
+    hollow: s.key === "A", // 2025=中空, 2026=塗り（色覚多様性対応）
     points: s.events
       .filter((e) => e.depth != null)
       .map((e) => {
@@ -99,8 +100,10 @@ export function DepthChart({ series, onFocus }: Props) {
             key={s.name}
             name={s.name}
             data={s.points}
-            fill={s.color}
-            fillOpacity={0.65}
+            fill={s.hollow ? "none" : s.color}
+            fillOpacity={s.hollow ? 1 : 0.65}
+            stroke={s.color}
+            strokeWidth={s.hollow ? 1.6 : 0}
             onMouseEnter={(d: unknown) => {
               const id = payloadId(d);
               if (id) onFocus?.(id);
