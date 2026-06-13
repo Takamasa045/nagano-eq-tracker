@@ -72,6 +72,34 @@ h1, h2, h3, h4 { letter-spacing: -0.015em; }
   .chart-fallback { animation: none; }
 }
 
+/* チャート読み込み失敗時のフォールバック */
+.chart-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 240px;
+  border-radius: 12px;
+  background: var(--panel-raise);
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 0 16px;
+}
+
+.chart-error button {
+  background: var(--ink);
+  color: var(--panel-solid);
+  border: none;
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(99, 102, 241, 0.3); }
 a:hover { color: var(--ink); border-color: var(--ink); }
 

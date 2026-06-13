@@ -1,10 +1,11 @@
-import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { lazy, useEffect, useMemo, useState } from "react";
 import type { Dataset, Event, Series } from "../types";
 import { enrich, MAINSHOCK_A_TIME, MAINSHOCK_B_TIME, intensityLabel } from "../utils";
 import { buildFieldNote, hoursSince, STALE_THRESHOLD_HOURS } from "../fieldNote";
 import { MapView, type MapFocus } from "../components/MapView";
 import { MainShockObsPoints } from "../components/MainShockObsPoints";
 import { IntensityHistogram } from "../components/IntensityHistogram";
+import { ChartSlot } from "../components/ChartSlot";
 import { navigate } from "../router";
 
 // Recharts 依存のチャート群は遅延読み込みして初期バンドルから外す
@@ -20,10 +21,6 @@ const RateChart = lazy(() =>
 const DepthChart = lazy(() =>
   import("../components/DepthChart").then((m) => ({ default: m.DepthChart })),
 );
-
-function ChartFallback() {
-  return <div className="chart-fallback" aria-hidden />;
-}
 
 const HORIZON_PRESETS = [
   { label: "六時間", hours: 6, bin: 0.25 },
@@ -226,27 +223,27 @@ export function Home() {
         </Panel>
 
         <Panel no="02" en="CUMULATIVE" title="累積回数" sub="本震時刻を 0 に揃えて重ね描き。線が寝てくれば沈静化の合図">
-          <Suspense fallback={<ChartFallback />}>
+          <ChartSlot>
             <CumulativeChart series={series} horizonHours={preset.hours} />
-          </Suspense>
+          </ChartSlot>
         </Panel>
 
         <Panel no="03" en="MAGNITUDE–TIME" title="M-T 散布" sub="時間 × マグニチュード。点にふれるとマップが光ります">
-          <Suspense fallback={<ChartFallback />}>
+          <ChartSlot>
             <MTChart series={series} horizonHours={preset.hours} onFocus={chartFocus} />
-          </Suspense>
+          </ChartSlot>
         </Panel>
 
         <Panel no="04" en="DECAY RATE" title="発生頻度" sub="1時間あたりの回数と大森-宇津則フィット（参考）">
-          <Suspense fallback={<ChartFallback />}>
+          <ChartSlot>
             <RateChart series={series} horizonHours={preset.hours} binHours={preset.bin} />
-          </Suspense>
+          </ChartSlot>
         </Panel>
 
         <Panel no="05" en="E–W SECTION" title="東西断面" sub="経度 × 深さ。震源は地殻浅部 10km 前後に集中">
-          <Suspense fallback={<ChartFallback />}>
+          <ChartSlot>
             <DepthChart series={series} onFocus={chartFocus} />
-          </Suspense>
+          </ChartSlot>
         </Panel>
 
         <Panel no="06" en="INTENSITY" title="震度別回数" sub="各震度階級で何回観測されたか">
