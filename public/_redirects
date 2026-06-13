@@ -1,0 +1,4 @@
+# Cloudflare Pages SPA フォールバック
+# 実在する静的アセット（/og.png, /assets/* 等）は先に配信され、
+# それ以外の未知パス（/istl, /geology 等）に index.html を 200 で返す
+/*    /index.html   200
