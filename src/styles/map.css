@@ -1,0 +1,232 @@
+/* ═══════════════ 震央マップ（MapLibre）まわりの見た目 ═══════════════
+   地図の挙動・タイル・出典表記は変えない。色・面・コントロールの大きさだけ整える。 */
+
+.map-wrap { position: relative; width: 100%; height: 100%; }
+
+.map-view { width: 100%; height: 100%; background: var(--mist); }
+
+/* ─── 地図上のコントロール（短い UI = ガラス） ─── */
+.map-controls {
+  position: absolute;
+  top: calc(var(--hud-h) + 28px);
+  left: 18px;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100% - 36px);
+  font-size: 13px;
+}
+
+/* ボタン・凡例は短い文字だけなのでガラス。非対応環境では不透明に近い面へ（base.css の .glass と同じ素材） */
+.map-controls button,
+.map-controls .legend {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid var(--glass-line);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), var(--shadow);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .map-controls button,
+  .map-controls .legend { background: rgba(250, 250, 246, 0.96); }
+}
+
+.map-controls button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.map-controls button:hover { background: #fff; }
+
+.map-controls button.active {
+  background: var(--moss);
+  border-color: var(--moss);
+  color: #fff;
+  font-weight: 700;
+}
+
+.map-controls button.overlay.active { background: var(--moss); }
+
+.map-controls .legend {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.map-controls .legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* 2025 は中空リング、2026 は塗り（色に頼らず形でも区別する） */
+.map-controls .legend-dot--ring {
+  background: transparent !important;
+  border: 2px solid;
+}
+
+.map-controls .legend-line {
+  display: inline-block;
+  width: 22px;
+  height: 0;
+  border-top: 2px dashed var(--bengara);
+}
+
+.map-note {
+  position: absolute;
+  top: calc(var(--hud-h) + 88px);
+  left: 18px;
+  z-index: 5;
+  max-width: 340px;
+  padding: 8px 14px;
+  border-radius: 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--body);
+}
+
+/* ─── 震源マーカー ─── */
+.eq-marker { cursor: pointer; transition: box-shadow 0.25s var(--ease); }
+
+.eq-marker.focused {
+  box-shadow: 0 0 0 4px rgba(61, 107, 79, 0.45) !important;
+  z-index: 20;
+}
+
+.eq-marker:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(61, 107, 79, 0.75) !important;
+  z-index: 20;
+}
+
+/* 本震マーカーは静止した二重の縁で示す（点滅・拍動はさせない） */
+.eq-marker.pulse { box-shadow: 0 0 0 6px rgba(63, 110, 112, 0.2); }
+
+/* ─── ポップアップ（不透明） ─── */
+.maplibregl-popup-content {
+  padding: 14px 18px 12px !important;
+  border: 1px solid var(--line);
+  border-radius: 16px !important;
+  background: var(--paper) !important;
+  box-shadow: var(--shadow) !important;
+  font-family: var(--f-jp);
+  color: var(--ink);
+}
+
+.maplibregl-popup-close-button {
+  width: 44px;
+  height: 44px;
+  right: 0;
+  top: 0;
+  font-size: 20px;
+  color: var(--muted);
+}
+
+.maplibregl-popup-tip { border-top-color: var(--paper) !important; border-bottom-color: var(--paper) !important; }
+
+.eq-pop__series {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 28px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.eq-pop__swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 2px solid var(--swatch, var(--series-b));
+  background: var(--swatch, var(--series-b));
+}
+
+.eq-pop__swatch--ring { background: transparent; }
+
+.eq-pop__time { margin: 2px 0 6px; font-family: var(--f-lat); font-size: 13px; color: var(--body); }
+.eq-pop__stats { display: flex; gap: 14px; font-size: 13px; color: var(--body); }
+.eq-pop__stats b { margin-left: 4px; font-family: var(--f-lat); font-size: 15px; font-weight: 600; color: var(--ink); }
+
+/* ─── MapLibre 標準コントロール ─── */
+.maplibregl-ctrl-bottom-right { right: calc(var(--rail-w) + 10px); }
+.maplibregl-ctrl-bottom-left { left: calc(var(--hero-w) + 34px); }
+
+.maplibregl-ctrl-group {
+  border: 1px solid var(--line);
+  border-radius: 14px !important;
+  background: var(--paper) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+.maplibregl-ctrl-group button {
+  width: 44px !important;
+  height: 44px !important;
+}
+
+.maplibregl-ctrl-group button + button { border-top: 1px solid var(--line) !important; }
+.maplibregl-ctrl-group button:focus-visible { outline: 3px solid var(--leaf); outline-offset: -3px; }
+
+/* 出典表記は常に読める濃さ・大きさで残す */
+.maplibregl-ctrl-attrib {
+  background: rgba(250, 250, 246, 0.92) !important;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.maplibregl-ctrl-attrib a {
+  color: var(--body) !important;
+  text-decoration: underline;
+  border: 0;
+}
+
+.maplibregl-ctrl-scale {
+  border-color: var(--body) !important;
+  background: rgba(250, 250, 246, 0.85) !important;
+  color: var(--ink) !important;
+  font-size: 12px;
+}
+
+/* 山名ラベル（地図の上に直接載るので縁取りで可読性を確保） */
+.peak-marker {
+  display: grid;
+  justify-items: center;
+  color: var(--body);
+  font-weight: 500;
+  text-shadow: 0 0 6px var(--mist), 0 0 3px var(--mist), 0 0 2px var(--mist);
+  pointer-events: none;
+}
+
+.peak-marker .tri { font-size: 11px; line-height: 1; }
+.peak-marker .nm { font-size: 12px; font-weight: 700; line-height: 1.4; white-space: nowrap; }
+.peak-marker .el { font-family: var(--f-lat); font-size: 11px; line-height: 1.2; color: var(--muted); }
+
+@media (max-width: 1079px) {
+  .maplibregl-ctrl-bottom-right { right: 0; }
+  .maplibregl-ctrl-bottom-left { left: 0; }
+
+  .map-controls { top: 12px; left: 12px; max-width: calc(100% - 24px); }
+  .map-note { top: 72px; left: 12px; max-width: calc(100% - 24px); }
+}

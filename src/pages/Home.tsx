@@ -1,4 +1,4 @@
-import { lazy, useEffect, useMemo, useState } from "react";
+import { lazy, useEffect, useId, useMemo, useState } from "react";
 import type { Dataset, Event, Series } from "../types";
 import { enrich, MAINSHOCK_A_TIME, MAINSHOCK_B_TIME, intensityLabel } from "../utils";
 import { buildFieldNote, hoursSince, STALE_THRESHOLD_HOURS } from "../fieldNote";
@@ -6,7 +6,8 @@ import { MapView, type MapFocus } from "../components/MapView";
 import { MainShockObsPoints } from "../components/MainShockObsPoints";
 import { IntensityHistogram } from "../components/IntensityHistogram";
 import { ChartSlot } from "../components/ChartSlot";
-import { navigate } from "../router";
+import { RouteLink } from "../components/RouteLink";
+import { SERIES_COLOR } from "../chartTheme";
 
 // Recharts 依存のチャート群は遅延読み込みして初期バンドルから外す
 const CumulativeChart = lazy(() =>
@@ -31,12 +32,6 @@ const HORIZON_PRESETS = [
   { label: "一年", hours: 8760, bin: 168 },
 ];
 
-const PALETTE = {
-  A: "#f59e0b",
-  B: "#f43f5e",
-  alps: "#6366f1",
-};
-
 function formatFetchedAt(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
@@ -58,15 +53,16 @@ interface PanelProps {
 }
 
 function Panel({ no, en, title, sub, children }: PanelProps) {
+  const headingId = useId();
   return (
-    <section className="panel">
+    <section className="panel" aria-labelledby={headingId}>
       <header className="panel__head">
-        <span className="panel__no">{no}</span>
-        <h2>
-          {title}
-          {sub && <small>{sub}</small>}
-        </h2>
-        <span className="panel__en">{en}</span>
+        <p className="panel__eyebrow">
+          <span className="panel__no">{no}</span>
+          <span className="panel__en">{en}</span>
+        </p>
+        <h2 id={headingId}>{title}</h2>
+        {sub && <p className="panel__sub">{sub}</p>}
       </header>
       {children}
     </section>
@@ -95,8 +91,8 @@ export function Home() {
     const eventsA = all.filter((e) => e.date >= A.date && e.date < B.date);
     const eventsB = all.filter((e) => e.date >= B.date);
     return [
-      { key: "A", label: "2025年4月18日 系列", color: PALETTE.A, mainshock: A, events: eventsA },
-      { key: "B", label: "2026年4月18日 系列", color: PALETTE.B, mainshock: B, events: eventsB },
+      { key: "A", label: "2025年4月18日 系列", color: SERIES_COLOR.A, mainshock: A, events: eventsA },
+      { key: "B", label: "2026年4月18日 系列", color: SERIES_COLOR.B, mainshock: B, events: eventsB },
     ];
   }, [dataset]);
 
@@ -114,19 +110,19 @@ export function Home() {
 
   return (
     <div className="obs-room">
-      <header className="hud">
+      <a className="skip" href="#main">本文へ移動</a>
+      <header className="hud glass">
         <div className="hud__id">
-          <span className="hud__dot" aria-hidden />
           <strong>長野県北部・余震観測室</strong>
           <span className="hud__sub">NAGANO AFTERSHOCK OBSERVATORY</span>
         </div>
         <nav className="hud__nav" aria-label="読みもの">
-          <button onClick={() => navigate("istl")}>糸魚川-静岡構造線</button>
-          <button onClick={() => navigate("geology")}>北アルプスと縫い目</button>
+          <RouteLink to="istl">糸魚川-静岡構造線</RouteLink>
+          <RouteLink to="geology">北アルプスと縫い目</RouteLink>
         </nav>
         {isStale && (
-          <span className="hud__stale" role="alert">
-            ⚠ データ更新が{Math.floor(staleHours)}時間止まっています
+          <span className="hud__stale" role="status">
+            データ更新が{Math.floor(staleHours)}時間止まっています
           </span>
         )}
         <div className="hud__meta">
@@ -135,16 +131,13 @@ export function Home() {
         </div>
       </header>
 
-      <div className="obs-map">
+      <div className="obs-map" role="region" aria-label="震央マップ">
         <MapView series={series} pulseKey="B" focus={focus} />
       </div>
 
-      <aside className="hero">
-        <div className="hero__side" aria-hidden>
-          <span className="hero__vtag">二つの四月の記録</span>
-          <span className="hero__stamp">観</span>
-        </div>
-        <h1>また同じ日に、<em>揺れた。</em></h1>
+      <section className="hero" aria-labelledby="hero-title">
+        <p className="hero__eyebrow">二つの四月の記録</p>
+        <h1 id="hero-title">また同じ日に、<em>揺れた。</em></h1>
         <p className="hero__lead">
           2025年と2026年、ちょうど一年違いの4月18日。<em>糸魚川-静岡構造線</em>の裾野で起きた
           二つの本震の余震活動を、経過時間を揃えて重ねています。
@@ -168,16 +161,17 @@ export function Home() {
             </div>
           );
         })}
-      </aside>
+      </section>
 
-      <div className="rail">
+      <main id="main" className="rail">
         <section className="panel controls-panel" aria-label="表示期間">
           <span className="label">表示期間</span>
           <div className="seg">
             {HORIZON_PRESETS.map((p, i) => (
               <button
                 key={p.label}
-                className={i === horizonIdx ? "active" : ""}
+                type="button"
+                aria-pressed={i === horizonIdx}
                 onClick={() => setHorizonIdx(i)}
               >
                 {p.label}
@@ -207,7 +201,7 @@ export function Home() {
           <ol className="recent-list">
             {recent.map((e) => (
               <li key={e.id}>
-                <button onClick={() => setFocus({ id: e.id, fly: true })}>
+                <button type="button" onClick={() => setFocus({ id: e.id, fly: true })}>
                   <span className="recent-list__time">
                     {e.time.slice(5, 16).replace("/", ".")}
                   </span>
@@ -270,7 +264,7 @@ export function Home() {
           <p className="istl-quote">
             気象庁は2025年4月18日の地震について、より大きな本震の前兆と判断する根拠は
             得られていないとの見解を示しています。詳しくは
-            <button className="linklike" onClick={() => navigate("istl")}>解説ページ</button>へ。
+            <RouteLink to="istl" className="linklike">解説ページ</RouteLink>へ。
           </p>
           <p className="muted">
             出典:{" "}
@@ -282,28 +276,28 @@ export function Home() {
 
         <Panel no="09" en="READINGS" title="読みもの" sub="背景を知るための2本">
           <div className="readings">
-            <button onClick={() => navigate("istl")}>
+            <RouteLink to="istl">
               <span className="t">糸魚川-静岡構造線</span>
               <span className="s">日本を東西に分ける158kmの大断層。4つの区間と過去の地震。</span>
               <span className="a">読む ↗</span>
-            </button>
-            <button onClick={() => navigate("geology")}>
+            </RouteLink>
+            <RouteLink to="geology">
               <span className="t">北アルプスと縫い目</span>
               <span className="s">後立山連峰はまだ隆起中。フォッサマグナ西縁という地質の継ぎ目。</span>
               <span className="a">読む ↗</span>
-            </button>
+            </RouteLink>
           </div>
         </Panel>
 
         <footer className="rail-footer">
-          <p className="disclaimer">
+          <p className="caveat">
             <strong>本サイトは個人が趣味で制作したものです。</strong>
             気象庁・地震調査研究推進本部・その他公的機関とは一切関係ありません。
             防災・避難の判断は、必ず
             <a href="https://www.data.jma.go.jp/nagano/shosai/jishinkaisetsu/jishinportal260418.html" target="_blank" rel="noreferrer">公式発表（気象庁ポータル）</a>
             をご確認ください。
           </p>
-          <p>
+          <p className="caveat">
             震源域フィルタ: 北緯 36.4–36.7／東経 137.7–138.1／深さ 30km 以下／M2.0 以上。
             速報値は後の確定値で修正されることがあります。
           </p>
@@ -313,7 +307,7 @@ export function Home() {
             ／ISTL の経路は概略です（正確な位置は<a href="https://www.gsi.go.jp/" target="_blank" rel="noreferrer">国土地理院</a>・地震本部を参照）。
           </p>
         </footer>
-      </div>
+      </main>
     </div>
   );
 }

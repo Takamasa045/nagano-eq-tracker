@@ -1,0 +1,359 @@
+/* ═══════════════ レール内のパネル ═══════════════
+   読ませる面はすべて不透明の paper カード（1px の線 + 角丸）。 */
+
+.panel {
+  padding: 22px 22px 20px;
+  border-radius: 22px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+
+.panel__head { margin-bottom: 14px; }
+
+.panel__eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--f-lat);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.panel__no { font-weight: 600; color: var(--leaf); }
+
+.panel__head h2 {
+  margin-top: 2px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.panel__sub {
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+/* ─── 表示期間（レール先頭に sticky。不透明） ─── */
+.controls-panel {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px 8px 16px;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+}
+
+.controls-panel .label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.seg {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--paper-2);
+}
+
+.seg button {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 4px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.seg button:hover { color: var(--ink); }
+
+.seg button[aria-pressed="true"] {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(30, 42, 36, 0.1);
+}
+
+/* ─── いまのようす ─── */
+.note-panel {
+  padding: 20px 22px 16px;
+  border-radius: 22px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--leaf);
+}
+
+.note-panel h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--leaf);
+}
+
+.note-panel h2 span {
+  margin-left: auto;
+  font-family: var(--f-lat);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.note-panel p {
+  margin-bottom: 8px;
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--body);
+}
+
+.note-panel p strong { color: var(--ink); font-weight: 700; }
+
+/* ─── 最近の揺れ ─── */
+.recent-list { display: grid; }
+
+.recent-list li + li { border-top: 1px solid var(--line); }
+
+.recent-list button {
+  display: grid;
+  grid-template-columns: 5.4em 3.4em auto minmax(0, 1fr);
+  gap: 4px 12px;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  font-size: 14px;
+  color: var(--body);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease);
+}
+
+.recent-list button:hover { background: var(--paper-2); }
+
+.recent-list__time,
+.recent-list__m,
+.recent-list__depth { font-family: var(--f-lat); font-variant-numeric: tabular-nums; }
+
+.recent-list__time { font-size: 13px; color: var(--muted); }
+.recent-list__m { font-size: 16px; font-weight: 600; color: var(--ink); }
+.recent-list__int { color: var(--ink); font-weight: 500; }
+.recent-list__depth { justify-self: end; font-size: 13px; color: var(--muted); }
+
+/* ─── 注意書き（速報値・参考・出典）。目立たなくしない ─── */
+.caveat {
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--stone);
+  border: 1px solid #ddd5c6;
+  border-left: 4px solid var(--bengara);
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--body);
+}
+
+.caveat strong { color: var(--ink); }
+
+/* ─── 活断層の文脈 ─── */
+.istl-rows { display: grid; margin-bottom: 12px; }
+
+.istl-rows li {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 2px 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.istl-rows li:first-child { border-top: 0; padding-top: 0; }
+
+.istl-rows .l { color: var(--body); }
+
+.istl-rows .v {
+  font-family: var(--f-lat);
+  font-weight: 500;
+  text-align: right;
+  color: var(--ink);
+}
+
+.istl-rows .v.hot { color: var(--bengara); font-weight: 700; }
+.istl-rows .n { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+
+.istl-quote {
+  padding-left: 14px;
+  border-left: 3px solid var(--sage);
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--body);
+}
+
+/* 文中のリンク。タップ領域は上下の padding で広げる（行間は変えない） */
+.linklike {
+  display: inline;
+  padding: 13px 2px;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--moss);
+  text-decoration: underline;
+  text-decoration-color: rgba(47, 74, 58, 0.4);
+  text-underline-offset: 0.22em;
+  cursor: pointer;
+}
+
+.linklike:hover { color: var(--ink); text-decoration-color: currentColor; }
+
+/* ─── 読みもの ─── */
+.readings { display: grid; gap: 10px; }
+
+.readings a {
+  display: grid;
+  gap: 2px;
+  min-height: 44px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.readings a:hover { background: #fff; border-color: #cfd5cb; }
+
+.readings .t { font-size: 16px; font-weight: 700; }
+.readings .s { font-size: 13px; line-height: 1.7; color: var(--body); }
+.readings .a { margin-top: 4px; font-size: 13px; font-weight: 700; color: var(--moss); }
+
+/* ─── 震度観測点 ─── */
+.obs-card + .obs-card { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+
+.obs-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 10px;
+}
+
+.obs-card__label { font-size: 15px; font-weight: 700; color: var(--ink); }
+.obs-card[data-key="A"] .obs-card__label::before,
+.obs-card[data-key="B"] .obs-card__label::before {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-top: 3px dashed var(--series-a);
+}
+.obs-card[data-key="B"] .obs-card__label::before { border-top-style: solid; border-top-color: var(--series-b); }
+
+.obs-card__time { font-family: var(--f-lat); font-size: 13px; color: var(--muted); }
+.obs-card__total { margin-left: auto; font-size: 13px; color: var(--muted); }
+
+.obs-dist { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--body);
+}
+
+.chip em { font-style: normal; font-weight: 700; font-family: var(--f-lat); }
+
+/* 震度階級の色。低彩度の連続スケール（砂 → 弁柄）。各色とも文字 4.5:1 以上 */
+.chip--s10, .obs-badge--s10 { background: var(--paper-2); color: var(--ink); }
+.chip--s20, .obs-badge--s20 { background: var(--sage); color: var(--ink); }
+.chip--s30, .obs-badge--s30 { background: #e6e2cf; color: var(--ink); }
+.chip--s40, .obs-badge--s40 { background: #dfcfae; color: var(--ink); }
+.chip--s45, .obs-badge--s45 { background: #d4b48c; color: var(--ink); }
+.chip--s50, .obs-badge--s50 { background: #b5815f; color: #1e150f; }
+.chip--s55, .obs-badge--s55 { background: #8e4a2f; color: #fff; }
+.chip--s60, .obs-badge--s60 { background: #6f3822; color: #fff; }
+.chip--s70, .obs-badge--s70 { background: #4d2517; color: #fff; }
+[class*="chip--s"] { border-color: transparent; }
+
+/* スクロール領域はキーボードでも操作できるよう tabindex 付きで使う */
+.obs-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 220px;
+  overflow-y: auto;
+  border-top: 1px solid var(--line);
+  scrollbar-width: thin;
+}
+
+.obs-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 36px;
+  padding: 4px 2px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.obs-badge {
+  min-width: 40px;
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-family: var(--f-lat);
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.obs-addr { color: var(--body); }
+.obs-foot { margin-top: 10px; font-size: 13px; color: var(--muted); }
+.obs-foot strong { color: var(--ink); }
+
+/* ─── レール内フッター ─── */
+.rail-footer { display: grid; gap: 10px; padding: 2px 2px 0; }
+
+.rail-footer p {
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--body);
+}
+
+.rail-footer .caveat { font-size: 13px; }
+
+/* 文中の出典リンク: 行間は変えず、タップできる範囲だけ上下に広げる */
+.muted a,
+.caveat a,
+.istl-quote a,
+.rail-footer a,
+.footer a {
+  padding-block: 12px;
+}
