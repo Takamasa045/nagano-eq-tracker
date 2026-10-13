@@ -83,11 +83,18 @@ export function useRoute(): Route {
   return route;
 }
 
+/** ルートの URL パス（<a href> 用。クローラ・新規タブ・コピーが効くように） */
+export function routePath(route: Route): string {
+  return ROUTES[route].path;
+}
+
 export function navigate(route: Route): void {
   const meta = ROUTES[route];
   if (window.location.pathname !== meta.path) {
     window.history.pushState({ route }, "", meta.path);
   }
   window.dispatchEvent(new Event(ROUTE_CHANGE));
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  // 動きを減らす設定の人にはスムーズスクロールをしない
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
 }

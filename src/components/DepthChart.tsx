@@ -6,17 +6,20 @@ import {
   ZAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ReferenceLine,
   ResponsiveContainer,
 } from "recharts";
 import type { Series } from "../types";
-import { CHART } from "../chartTheme";
+import { AXIS_TICK, CHART, NO_ANIMATION } from "../chartTheme";
+import { SeriesLegend } from "./SeriesLegend";
 
 type Props = {
   series: Series[];
   onFocus?: (id: string | null) => void;
 };
+
+/** 東経の目盛り（0.1° 刻み。5 個でスマホ幅でも重ならない） */
+const LON_TICKS = [137.7, 137.8, 137.9, 138.0, 138.1];
 
 function payloadId(d: unknown): string | null {
   const p = (d as { payload?: { id?: string } } | undefined)?.payload;
@@ -59,59 +62,72 @@ export function DepthChart({ series, onFocus }: Props) {
   }));
 
   return (
-    <ResponsiveContainer width="100%" height={220}>
-      <ScatterChart margin={{ top: 8, right: 12, bottom: 8, left: -8 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke={CHART.grid} />
-        <XAxis
-          dataKey="lon"
-          type="number"
-          domain={[137.7, 138.1]}
-          tickFormatter={(v) => `${v.toFixed(2)}°E`}
-          stroke={CHART.axis}
-        />
-        <YAxis
-          dataKey="depth"
-          type="number"
-          domain={[0, 30]}
-          reversed
-          tickFormatter={(v) => `${v}km`}
-          stroke={CHART.axis}
-        />
-        <ZAxis dataKey="m" range={[40, 400]} />
-        <Tooltip
-          cursor={{ strokeDasharray: "3 3" }}
-          content={({ active, payload }) => {
-            if (!active || !payload?.length) return null;
-            const p = payload[0].payload;
-            return (
-              <div style={{ ...CHART.tooltipStyle, padding: "6px 10px" }}>
-                <div>{p.time}</div>
-                <div>M{p.m} / 震度{p.intensity}</div>
-                <div>深さ {p.depth}km / {p.lon.toFixed(3)}°E</div>
-              </div>
-            );
-          }}
-        />
-        <Legend wrapperStyle={{ color: CHART.legend, fontSize: 11 }} />
-        {/* ISTL推定通過位置（北部で東経137.85°前後） */}
-        <ReferenceLine x={137.85} stroke={CHART.refLine} strokeDasharray="6 3" label={{ value: "ISTL付近", position: "top", fill: CHART.refLine, fontSize: 10 }} />
-        {data.map((s) => (
-          <Scatter
-            key={s.name}
-            name={s.name}
-            data={s.points}
-            fill={s.hollow ? "none" : s.color}
-            fillOpacity={s.hollow ? 1 : 0.65}
-            stroke={s.color}
-            strokeWidth={s.hollow ? 1.6 : 0}
-            onMouseEnter={(d: unknown) => {
-              const id = payloadId(d);
-              if (id) onFocus?.(id);
-            }}
-            onMouseLeave={() => onFocus?.(null)}
+    <>
+      <ResponsiveContainer width="100%" height={220}>
+        <ScatterChart margin={{ top: 16, right: 14, bottom: 4, left: 0 }}>
+          <CartesianGrid strokeDasharray="3 4" stroke={CHART.grid} />
+          <XAxis
+            dataKey="lon"
+            type="number"
+            domain={[137.7, 138.1]}
+            ticks={LON_TICKS}
+            tickFormatter={(v) => `${v.toFixed(1)}°E`}
+            tick={AXIS_TICK}
+            stroke={CHART.axis}
           />
-        ))}
-      </ScatterChart>
-    </ResponsiveContainer>
+          <YAxis
+            dataKey="depth"
+            type="number"
+            domain={[0, 30]}
+            reversed
+            tickFormatter={(v) => `${v}km`}
+            tick={AXIS_TICK}
+            stroke={CHART.axis}
+            width={48}
+          />
+          <ZAxis dataKey="m" range={[40, 400]} />
+          <Tooltip
+            cursor={{ strokeDasharray: "3 3" }}
+            content={({ active, payload }) => {
+              if (!active || !payload?.length) return null;
+              const p = payload[0].payload;
+              return (
+                <div style={{ ...CHART.tooltipStyle, padding: "6px 10px" }}>
+                  <div>{p.time}</div>
+                  <div>M{p.m} / 震度{p.intensity}</div>
+                  <div>深さ {p.depth}km / {p.lon.toFixed(3)}°E</div>
+                </div>
+              );
+            }}
+          />
+          {/* ISTL推定通過位置（北部で東経137.85°前後） */}
+          <ReferenceLine x={137.85} stroke={CHART.refLine} strokeDasharray="6 3" label={{ value: "ISTL付近", position: "top", fill: CHART.refLine, fontSize: 12 }} />
+          {data.map((s) => (
+            <Scatter
+              key={s.name}
+              name={s.name}
+              data={s.points}
+              fill={s.hollow ? "none" : s.color}
+              fillOpacity={s.hollow ? 1 : 0.6}
+              stroke={s.color}
+              strokeWidth={s.hollow ? 1.6 : 1.2}
+              onMouseEnter={(d: unknown) => {
+                const id = payloadId(d);
+                if (id) onFocus?.(id);
+              }}
+              onMouseLeave={() => onFocus?.(null)}
+              {...NO_ANIMATION}
+            />
+          ))}
+        </ScatterChart>
+      </ResponsiveContainer>
+      <SeriesLegend
+        entries={series.map((s) => ({
+          label: s.label,
+          color: s.color,
+          shape: s.key === "A" ? "ring" : "dot",
+        }))}
+      />
+    </>
   );
 }

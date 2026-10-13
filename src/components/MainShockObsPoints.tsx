@@ -34,7 +34,7 @@ export function MainShockObsPoints({ series }: MainShockObsPointsProps) {
                 ))}
               </div>
 
-              <ol className="obs-list">
+              <ol className="obs-list" tabIndex={0} aria-label={`${s.label}の震度3以上の観測点`}>
                 {high.map((p) => (
                   <li key={p.addr}>
                     <span className={`obs-badge obs-badge--s${p.scale}`}>

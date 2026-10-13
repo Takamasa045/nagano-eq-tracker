@@ -1,0 +1,90 @@
+/* ═══════════════ グラフ ═══════════════
+   系列色の正本は chartTheme.ts の SERIES_COLOR。2025 = 灰 / 2026 = 青緑。
+   灰は paper 上で 3.0:1 なので、線・点・面にだけ使い、文字は ink / muted にする。 */
+
+/* Recharts の面は paper（カード）の上に直接置く */
+.recharts-wrapper { font-family: var(--f-lat); }
+
+/* キーボードで入ったときのフォーカスを見えるように */
+.recharts-wrapper:focus-visible,
+.recharts-surface:focus-visible {
+  outline: 3px solid var(--leaf);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.recharts-default-legend { margin: 0; padding: 0; }
+
+/* 大森-宇津則フィットの注記（参考線であることを目立たせたまま残す） */
+.fit-info {
+  margin-top: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.fit-info__note {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--body);
+}
+
+/* ─── 震度別ヒストグラム ─── */
+.hist { margin: 0; }
+
+.hist-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 260px;
+}
+
+/* ─── 凡例（SeriesLegend）。印は色 + 形、文字は ink ─── */
+.series-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin-top: 8px;
+  font-family: var(--f-lat);
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+.series-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.series-legend__mark {
+  display: inline-block;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.series-legend__mark--line-solid,
+.series-legend__mark--line-dash {
+  width: 22px;
+  height: 0;
+  border-top: 3px solid var(--mark);
+}
+
+.series-legend__mark--line-dash { border-top-style: dashed; }
+
+.series-legend__mark--ring,
+.series-legend__mark--dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--mark);
+}
+
+.series-legend__mark--dot { background: var(--mark); }
+
+.series-legend__mark--bar {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: var(--mark);
+}

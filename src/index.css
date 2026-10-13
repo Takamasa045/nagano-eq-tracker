@@ -1,6 +1,7 @@
+/* 初回描画前の地色。トークン本体は styles/base.css */
 html, body, #root {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background: #f7f6f4;
+  background: #f3f4ef;
 }

@@ -13,7 +13,7 @@ type Props = {
   focus?: MapFocus;
 };
 
-const ISTL_COLOR = "#6366f1";
+const ISTL_COLOR = "#8E4A2F";
 const PEAK_MIN_ZOOM = 8.4;
 
 const TILE_PRESETS = {
@@ -124,7 +124,9 @@ function popupHtml(s: Series, e: Event): string {
   const depth = e.depth != null ? `${e.depth}km` : "不明";
   return (
     `<div class="eq-pop">` +
-    `<div class="eq-pop__series" style="color:${s.color}">● ${s.label}</div>` +
+    `<div class="eq-pop__series">` +
+    `<span class="eq-pop__swatch${s.key === "A" ? " eq-pop__swatch--ring" : ""}" style="--swatch:${s.color}"></span>` +
+    `${s.label}</div>` +
     `<div class="eq-pop__time">${e.time}</div>` +
     `<div class="eq-pop__stats">` +
     `<span>M<b>${e.magnitude.toFixed(1)}</b></span>` +
