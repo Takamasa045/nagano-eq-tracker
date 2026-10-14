@@ -17,16 +17,14 @@ const ISTL_COLOR = "#8E4A2F";
 const PEAK_MIN_ZOOM = 8.4;
 
 const TILE_PRESETS = {
+  // CARTO の light_all は、キーなしの利用者には透かし画像（API KEY REQUIRED）しか返さなくなったため、
+  // キー不要で出典表記だけで使える国土地理院の淡色地図に切り替えた（2026-10）。
   base: {
     label: "ライト",
-    tiles: [
-      "https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-      "https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-      "https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-      "https://d.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-    ],
+    tiles: ["https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png"],
+    maxzoom: 18,
     attribution:
-      '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+      '地図: <a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noreferrer">国土地理院 地理院タイル（淡色地図）</a>',
   },
   topo: {
     label: "地形",
@@ -35,6 +33,7 @@ const TILE_PRESETS = {
       "https://b.tile.opentopomap.org/{z}/{x}/{y}.png",
       "https://c.tile.opentopomap.org/{z}/{x}/{y}.png",
     ],
+    maxzoom: 17,
     attribution:
       'タイル: © <a href="https://opentopomap.org/">OpenTopoMap</a> (CC-BY-SA) / © OSM',
   },
@@ -53,6 +52,7 @@ function buildStyle(tileKey: TileKey, faultOverlay: boolean): maplibregl.StyleSp
       type: "raster",
       tiles: preset.tiles as unknown as string[],
       tileSize: 256,
+      maxzoom: preset.maxzoom,
       attribution: preset.attribution,
     },
     istl: {
