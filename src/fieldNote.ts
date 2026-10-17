@@ -21,9 +21,9 @@ export function moodLabel(recentCount: number): string {
 }
 
 /** 観測メモ：直近の活動を比較つきで要約（しきい値は決め打ち） */
-export function buildFieldNote(series: Series[], fetchedAt: string): FieldNote | null {
-  const now = new Date(fetchedAt);
-  if (Number.isNaN(now.getTime())) return null;
+export function buildFieldNote(series: Series[], nowMs: number = Date.now()): FieldNote | null {
+  if (!Number.isFinite(nowMs)) return null;
+  const now = new Date(nowMs);
   const [a, b] = series;
   if (!a || !b) return null;
 
@@ -38,13 +38,3 @@ export function buildFieldNote(series: Series[], fetchedAt: string): FieldNote |
 
   return { days, recentB, refA, mood: moodLabel(recentB) };
 }
-
-/** データ取得時刻からの経過時間（時間）。パース不能なら null */
-export function hoursSince(fetchedAt: string, nowMs: number = Date.now()): number | null {
-  const t = new Date(fetchedAt).getTime();
-  if (Number.isNaN(t)) return null;
-  return (nowMs - t) / 3_600_000;
-}
-
-/** 毎時更新がこの時間を超えて止まっていたら警告を出す */
-export const STALE_THRESHOLD_HOURS = 26;

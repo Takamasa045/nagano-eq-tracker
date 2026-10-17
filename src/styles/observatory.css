@@ -79,31 +79,6 @@
   white-space: nowrap;
 }
 
-/* データ更新の停止。煽らず、事実だけ静かに知らせる */
-.hud__stale {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 36px;
-  padding: 0 14px;
-  border-radius: 999px;
-  background: var(--stone);
-  border: 1px solid #ddd5c6;
-  color: var(--ink);
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.hud__stale::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--bengara);
-  flex-shrink: 0;
-}
-
 /* ─── 左下ヒーロー（長文を含むので不透明の paper） ─── */
 .hero {
   position: fixed;
@@ -284,7 +259,6 @@
 
   .hud__id { flex: 1 1 100%; }
   .hud__nav { flex: 1 1 100%; margin-left: -8px; flex-wrap: wrap; }
-  .hud__stale { flex: 1 1 100%; white-space: normal; min-height: 36px; padding-block: 6px; border-radius: 14px; }
 
   .obs-map {
     position: relative;

@@ -1,7 +1,7 @@
 import { lazy, useEffect, useId, useMemo, useState } from "react";
 import type { Dataset, Event, Series } from "../types";
 import { enrich, MAINSHOCK_A_TIME, MAINSHOCK_B_TIME, intensityLabel } from "../utils";
-import { buildFieldNote, hoursSince, STALE_THRESHOLD_HOURS } from "../fieldNote";
+import { buildFieldNote } from "../fieldNote";
 import { MapView, type MapFocus } from "../components/MapView";
 import { MainShockObsPoints } from "../components/MainShockObsPoints";
 import { IntensityHistogram } from "../components/IntensityHistogram";
@@ -100,9 +100,7 @@ export function Home() {
   if (!dataset || !series) return <p className="loading">地面の声に耳をすませています …</p>;
 
   const preset = HORIZON_PRESETS[horizonIdx];
-  const note = buildFieldNote(series, dataset.fetched_at);
-  const staleHours = hoursSince(dataset.fetched_at);
-  const isStale = staleHours != null && staleHours > STALE_THRESHOLD_HOURS;
+  const note = buildFieldNote(series);
   const recent = [...series[1].events]
     .sort((a, b) => b.date.getTime() - a.date.getTime())
     .slice(0, 8);
@@ -120,11 +118,6 @@ export function Home() {
           <RouteLink to="istl">糸魚川-静岡構造線</RouteLink>
           <RouteLink to="geology">北アルプスと縫い目</RouteLink>
         </nav>
-        {isStale && (
-          <span className="hud__stale" role="status">
-            データ更新が{Math.floor(staleHours)}時間止まっています
-          </span>
-        )}
         <div className="hud__meta">
           <span>UPDATED {formatFetchedAt(dataset.fetched_at)}</span>
           <span>{dataset.count} EVENTS</span>
