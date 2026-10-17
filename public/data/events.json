@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-17T06:47:05+0000",
+  "fetched_at": "2026-10-18T00:25:50+0900",
   "source": "P2P地震情報 API v2 (https://www.p2pquake.net/)",
   "filter": {
     "name": "長野県北部",
@@ -12,9 +12,9 @@
     "depth_max_km": 30,
     "min_magnitude": 2.0,
     "since": "20250417",
-    "until": "20261018"
+    "until": "20261019"
   },
-  "count": 87,
+  "count": 88,
   "events": [
     {
       "time": "2025/04/18 18:26:00",
@@ -5419,6 +5419,31 @@
         },
         {
           "addr": "大町市大町図書館",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "time": "2026/10/17 23:48:00",
+      "magnitude": 2.4,
+      "depth": 10,
+      "lat": 36.6,
+      "lon": 137.9,
+      "maxScale": 20,
+      "type": "DetailScale",
+      "id": "6ad38b6064680b00075e8ef5",
+      "domesticTsunami": "None",
+      "points": [
+        {
+          "addr": "大町市美麻",
+          "scale": 20
+        },
+        {
+          "addr": "大町市役所",
+          "scale": 10
+        },
+        {
+          "addr": "小川村高府",
           "scale": 10
         }
       ]
