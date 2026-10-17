@@ -25,11 +25,14 @@ pnpm build        # 本番ビルド
 python3 scripts/fetch.py   # データ更新（P2P APIから取得→public/data/events.json）
 ```
 
-## デプロイ（GitHub Pages）
+## デプロイ（Cloudflare Pages）
 
-1. このリポジトリを GitHub に push
-2. Settings → Pages → Source を **GitHub Actions** に変更
-3. `.github/workflows/deploy.yml` が毎時データ更新＋デプロイを実行
+`.github/workflows/deploy.yml` がデータ更新と Cloudflare Pages へのデプロイを行う。
+
+- スケジュール: 6時間ごと（GitHub Actions の遅延あり）。新着の理論上の遅れは最大約6時間
+- カタログ（震源域内イベント）が前回と同じなら、コミットもデプロイもしない
+- 取得は既存 `events.json` があるとき直近14日の増分マージ。全期間の再取得は Actions の `workflow_dispatch`（`full_fetch`）
+- PR では API 取得・デプロイをせず、Python / Node のテストとビルドだけ実行
 
 Vercel に置く場合はそのまま import で動きます（base path 不要）。
 

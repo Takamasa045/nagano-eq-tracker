@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Event, RawEvent, Series } from "./types";
-import { buildFieldNote, hoursSince, moodLabel, STALE_THRESHOLD_HOURS } from "./fieldNote";
+import { buildFieldNote, moodLabel } from "./fieldNote";
 import { enrich } from "./utils";
 
 function makeEvent(time: string): Event {
@@ -50,10 +50,10 @@ describe("buildFieldNote", () => {
   ]);
 
   // B本震 2026/04/18 13:20 JST = 04:20Z。+10日と40分後を「現在」とする
-  const FETCHED = "2026-04-28T05:00:00+0000";
+  const NOW = Date.parse("2026-04-28T05:00:00Z");
 
   it("経過日数と直近7日件数を計算する", () => {
-    const note = buildFieldNote([A, B], FETCHED);
+    const note = buildFieldNote([A, B], NOW);
     expect(note).not.toBeNull();
     expect(note!.days).toBe(10);
     // 直近7日 (2026/04/21 05:00Z 以降): 04/27 09:00 JST の1件のみ
@@ -62,28 +62,13 @@ describe("buildFieldNote", () => {
   });
 
   it("去年の同経過日数時点の7日間件数を参照する", () => {
-    const note = buildFieldNote([A, B], FETCHED);
+    const note = buildFieldNote([A, B], NOW);
     // 参照窓の終端 = A本震 + 10日 = 2025/04/28 11:19Z。
     // 04/28 12:00 JST (03:00Z) は窓内、04/19 00:00 JST は7日より前で窓外
     expect(note!.refA).toBe(1);
   });
 
   it("不正な日時では null を返す", () => {
-    expect(buildFieldNote([A, B], "not-a-date")).toBeNull();
-  });
-});
-
-describe("hoursSince / STALE_THRESHOLD_HOURS", () => {
-  it("経過時間を時間単位で返す", () => {
-    const now = Date.parse("2026-06-12T12:00:00Z");
-    expect(hoursSince("2026-06-12T00:00:00+0000", now)).toBe(12);
-  });
-
-  it("パース不能なら null", () => {
-    expect(hoursSince("oops", Date.now())).toBeNull();
-  });
-
-  it("しきい値は毎時更新の遅延を許容する", () => {
-    expect(STALE_THRESHOLD_HOURS).toBeGreaterThan(24);
+    expect(buildFieldNote([A, B], Number.NaN)).toBeNull();
   });
 });

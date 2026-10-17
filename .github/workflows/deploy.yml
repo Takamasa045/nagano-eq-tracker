@@ -3,21 +3,29 @@ name: Update data & Deploy to Cloudflare Pages
 on:
   push:
     branches: [main]
+  pull_request:
   schedule:
-    # JSTで毎時5分（UTCで毎時20分前）に実行 → 速報遅延考慮
-    - cron: '5 * * * *'
+    # 6時間ごと（UTC :05 = JST :05+9h）。速報アラートではなく余震系列の可視化なので、
+    # 毎時→6時間へ間引く。トレードオフは PR 本文に記載。
+    - cron: '5 */6 * * *'
   workflow_dispatch:
+    inputs:
+      full_fetch:
+        description: '直近14日の増分ではなく、2025-04-17 からの全期間を再取得する'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
 
 concurrency:
-  group: 'cf-pages'
-  cancel-in-progress: false
+  group: nagano-eq-${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || 'production' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -25,44 +33,76 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Python tests
+        run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
+
       - name: Refresh earthquake data
+        if: github.event_name != 'pull_request'
+        env:
+          FULL_FETCH: ${{ (github.event_name == 'workflow_dispatch' && inputs.full_fetch) || '0' }}
         run: python3 scripts/fetch.py
 
+      - name: Plan frontend / deploy
+        id: plan
+        run: |
+          if git diff --quiet -- public/data/events.json; then
+            echo "catalog_changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "catalog_changed=true" >> "$GITHUB_OUTPUT"
+          fi
+          if [ "${{ github.event_name }}" != "schedule" ] || ! git diff --quiet -- public/data/events.json; then
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: pnpm/action-setup@v4
+        if: steps.plan.outputs.build == 'true'
         with:
           version: 10
 
       - uses: actions/setup-node@v4
+        if: steps.plan.outputs.build == 'true'
         with:
           node-version: 22
           cache: 'pnpm'
 
-      - run: pnpm install --frozen-lockfile
+      - name: Cache wrangler (npx)
+        if: steps.plan.outputs.build == 'true' && github.event_name != 'pull_request'
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-wrangler-4
+
+      - name: Install
+        if: steps.plan.outputs.build == 'true'
+        run: pnpm install --frozen-lockfile
 
       - name: Test
+        if: steps.plan.outputs.build == 'true'
         run: pnpm test
 
       - name: Build
+        if: steps.plan.outputs.build == 'true'
         run: pnpm build
 
       - name: Deploy to Cloudflare Pages
+        if: steps.plan.outputs.build == 'true' && github.event_name != 'pull_request'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE }}
           CLOUDFLARE_ACCOUNT_ID: a697a3a284fa5543c640bc7d37f2c517
         run: |
-          npx --yes wrangler@latest pages deploy dist \
+          npx --yes wrangler@4 pages deploy dist \
             --project-name=nagano-eq-tracker \
             --branch=main \
             --commit-hash=${{ github.sha }} \
             --commit-message="ci deploy ${{ github.sha }}"
 
       - name: Commit refreshed data
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && steps.plan.outputs.catalog_changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/data/events.json
-          if ! git diff --cached --quiet; then
-            git commit -m "data: refresh events.json [skip ci]"
-            git push
-          fi
+          git commit -m "data: refresh events.json [skip ci]"
+          git push
